@@ -1,6 +1,5 @@
-package de.hdm.contager.client;
+package de.hdm.pinit.client;
 
-import de.hdm.contager.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,10 +16,14 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.pinit.shared.FieldVerifier;
+import de.hdm.pinit.shared.PinitService;
+import de.hdm.pinit.shared.PinitServiceAsync;
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Contager implements EntryPoint {
+public class Pinit implements EntryPoint {
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -31,7 +34,7 @@ public class Contager implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+	private final PinitServiceAsync pinitService = GWT.create(PinitService.class);
 
 	/**
 	 * This is the entry point method.
@@ -117,7 +120,7 @@ public class Contager implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer, new AsyncCallback<String>() {
+				pinitService.greetServer(textToServer, new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						// Show the RPC error message to the user
 						dialogBox.setText("Remote Procedure Call - Failure");

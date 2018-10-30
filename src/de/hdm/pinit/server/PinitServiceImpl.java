@@ -1,14 +1,15 @@
-package de.hdm.contager.server;
+package de.hdm.pinit.server;
 
-import de.hdm.contager.client.GreetingService;
-import de.hdm.contager.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.hdm.pinit.shared.FieldVerifier;
+import de.hdm.pinit.shared.PinitService;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
+public class PinitServiceImpl extends RemoteServiceServlet implements PinitService {
 
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 

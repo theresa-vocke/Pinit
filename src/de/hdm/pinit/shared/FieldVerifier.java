@@ -1,4 +1,4 @@
-package de.hdm.contager.shared;
+package de.hdm.pinit.shared;
 
 /**
  * <p>
