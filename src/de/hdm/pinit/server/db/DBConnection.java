@@ -51,7 +51,7 @@ public class DBConnection {
 	 * mittels DBconnection.connection() die Verbindung zur DB hergestellt und kann
 	 * nicht über den new-Operator erstellt werden.
 	 */
-	public static Connection Connection() {
+	public static Connection connection() {
 
 		// Wenn bislang keine DBVerbindung hergestellt ist
 		if (con == null) {

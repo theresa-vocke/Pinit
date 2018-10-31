@@ -25,7 +25,7 @@ public class Pinboard extends BusinessObject {
 		return ownerId;
 	}
 
-	public void setOwnerId(int ownerid) {
+	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 }
