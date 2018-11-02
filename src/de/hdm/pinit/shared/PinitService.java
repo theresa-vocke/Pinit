@@ -30,7 +30,7 @@ public interface PinitService extends RemoteService {
 	 *  User anlegen
 	 */
 
-	public User createUser(int id, String nickname, String email, Timestamp createDate) throws IllegalArgumentException;
+	public User createUser(String nickname, String email) throws IllegalArgumentException;
 
 	/**
 	 * getUserById, um dann User auszulesen für den die Pinnwand angelegt werden soll
@@ -42,12 +42,12 @@ public interface PinitService extends RemoteService {
 	 *  Pinnwand für diesen User erstellen (createPinboard)
 	 */
 
-	public Pinboard createPinboard(int id, int ownerId, Timestamp createDate) throws IllegalArgumentException;
+	public Pinboard createPinboard(User u) throws IllegalArgumentException;
 	
 	/**
 	 * getPinboardByOwner evtl. dass das Pinboard dann direkt angezeigt wird, wenn der Login abgeschlossen ist
 	 */
 
-	public Pinboard getPinboardByOwner(int ownerId) throws IllegalArgumentException;
+	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException;
 	
 }

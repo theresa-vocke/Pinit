@@ -12,15 +12,15 @@ import de.hdm.pinit.shared.bo.User;
  */
 public interface PinitServiceAsync {
 
-	void createUser(int id, String nickname, String email, Timestamp createDate, AsyncCallback<User> callback);
+	void createUser(String nickname, String email, AsyncCallback<User> callback);
 
 	void getUserById(int id, AsyncCallback<User> callback);
 
 	void init(AsyncCallback<Void> callback);
 
-	void createPinboard(int id, int ownerId, Timestamp createDate, AsyncCallback<Pinboard> callback);
+	void createPinboard(User u, AsyncCallback<Pinboard> callback);
 
-	void getPinboardByOwner(int ownerId, AsyncCallback<Pinboard> callback);
+	void getPinboardByOwner(User u, AsyncCallback<Pinboard> callback);
 	
 	
 }
