@@ -190,9 +190,8 @@ public class UserMapper {
 	}
 	
 	
-	public Vector<User> findById(int id) {
+	public User findById(int id) {
 		Connection con = DBConnection.connection();
-		Vector<User> result = new Vector<User>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -204,6 +203,7 @@ public class UserMapper {
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. 
 			 * Diese Ergebnisse werden in ein UserObjekt mit den Setter-Methoden rein gepackt. 
+			 * Ergebnis Tupel in ein Objekt umwandeln.
 			 */
 			while (rs.next()) {
 				User u = new User();
@@ -213,16 +213,14 @@ public class UserMapper {
 				u.setSurname(rs.getString("surname"));
 				u.setNickname(rs.getString("nickname"));
 				u.setCreateDate(rs.getTimestamp("createdate"));
-
-				// Hinzufügen des neuen Objekts zum Ergebnisvektor
-				result.addElement(u);
+				return u;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 
-		// Ergebnisvektor zurückgeben
-		return result;
+		return null;
 	}
 	
 

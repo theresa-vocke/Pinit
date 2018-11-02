@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
 
 import de.hdm.pinit.shared.bo.Pinboard;
-import de.hdm.pinit.shared.bo.User;
 import de.hdm.pinit.server.db.DBConnection;
 
 /**
@@ -133,10 +131,8 @@ public class PinboardMapper {
 	/**
 	 * Auslesen aller Pinboard-Objekte mit gegebenem Nicknamen
 	 */
-	public Vector<Pinboard> findByOwnerId(int ownerId) {
+	public Pinboard findByOwner(int ownerId) {
 		Connection con = DBConnection.connection();
-
-		Vector<Pinboard> result = new Vector<Pinboard>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -153,16 +149,16 @@ public class PinboardMapper {
 				p.setId(rs.getInt("id"));
 				p.setCreateDate(rs.getTimestamp("createdate"));
 				p.setOwnerId(rs.getInt("ownerid"));
+				
+				return p;
 
-				// Hinzufügen des neuen Objekts zum Ergebnisvektor
-				result.addElement(p);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 
-		// Ergebnisvektor zurückgeben
-		return result;
+		return null;
 	}
 
 }
