@@ -7,13 +7,23 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>PinitServlet</servlet-name>
+    <servlet-name>pinitServlet</servlet-name>
     <servlet-class>de.hdm.pinit.server.PinitServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>PinitServlet</servlet-name>
+    <servlet-name>pinitServlet</servlet-name>
     <url-pattern>/pinit/pinitservice</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>de.hdm.pinit.server.LoginServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/pinit/login</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

@@ -17,14 +17,15 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		LoginInfo loginInfo = new LoginInfo();
+		
 		if (user != null) {
-		loginInfo.setLoggedIn(true);
-		loginInfo.setEmailAddress(user.getEmail());
-		loginInfo.setNickname(user.getNickname());
-		loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
+		 loginInfo.setLoggedIn(true);
+		 loginInfo.setEmailAddress(user.getEmail());
+		 loginInfo.setNickname(user.getNickname());
+		 loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
 		} else {
-		loginInfo.setLoggedIn(false);
-		loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
+		 loginInfo.setLoggedIn(false);
+		 loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
 		}
 		return loginInfo;
 		}
