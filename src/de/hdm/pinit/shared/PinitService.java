@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.pinit.shared.bo.Pinboard;
+import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
 
 /**
@@ -49,5 +50,10 @@ public interface PinitService extends RemoteService {
 	 */
 
 	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException;
+
+
+	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException;
+
+	Subscription getSubscriptionByUser(int userId) throws IllegalArgumentException;
 	
 }
