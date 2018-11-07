@@ -14,6 +14,9 @@ public class Pinboard extends BusinessObject {
 	 * Jede Pinnwand hat einen Owner, der über die <code>ownerId</code>
 	 * identifiziert werden kann.
 	 */
+	
+	
+	private User user;
 
 	private int ownerId;
 
@@ -28,4 +31,15 @@ public class Pinboard extends BusinessObject {
 	public void setOwnerId(int userId) {
 		this.ownerId = userId;
 	}
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 }

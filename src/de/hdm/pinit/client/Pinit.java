@@ -1,5 +1,7 @@
 package de.hdm.pinit.client;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -14,6 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.pinit.client.gui.ClientSideSettings;
 import de.hdm.pinit.client.gui.PinboardCell;
+import de.hdm.pinit.client.gui.PinboardCellList;
 import de.hdm.pinit.client.gui.PinboardForm;
 import de.hdm.pinit.client.gui.PostingForm;
 import de.hdm.pinit.client.gui.SubscriptionButton;
@@ -46,13 +49,41 @@ public class Pinit implements EntryPoint {
 			pinitService = ClientSideSettings.getPinitService();
 		}
 
-		// irg Beschreibung
+		/*
+		 * 
+		 */
+		// Zelle in unserer Liste
+		PinboardCell pc = new PinboardCell();
+		
+		// Unsere CellList mit allen Pinnwänden, die als Zellen dargestellt sind
+		PinboardCellList<Pinboard> pcl = new PinboardCellList<Pinboard>(pc);
+		
 		
 		PinboardForm pif = new PinboardForm();
-		PostingForm pof = new PostingForm();
+		
+		//PostingForm pof = new PostingForm();
+		
 		SubscriptionButton sb = new SubscriptionButton();
-		CellList<Pinboard> clp = new CellList<Pinboard>(new PinboardCell());
+		
+		/*
+		 * PinnboardForm und CellList müssen einander kennen 
+		 */
+		pcl.setPinboardForm(pif);
+		pif.setPcl(pcl);
+		
+		// Neues VerticalPanel erhält CellListe mit Zellen
+		VerticalPanel navPanel = new VerticalPanel();
+		navPanel.add(pcl);
+		
+		// Neues VerticalPanel erhält Details-Ansicht, sprich Pinnwanddetails
+		VerticalPanel detailsPanel = new VerticalPanel();
+		detailsPanel.add(pif);
+		
 	
+		 //List <Pinboard> list = pcl.getPinboardDataProvider().getList();
+		
+		 RootPanel.get("Navigator").add(pcl);
+		 RootPanel.get("Details").add(pif);
 		
 	}
 
