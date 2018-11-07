@@ -6,6 +6,7 @@ import de.hdm.pinit.server.db.PinboardMapper;
 import de.hdm.pinit.server.db.UserMapper;
 import de.hdm.pinit.shared.PinitService;
 import de.hdm.pinit.shared.bo.Pinboard;
+import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
 
 /**
@@ -69,6 +70,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 		this.uMapper = UserMapper.userMapper();
 		this.pMapper = PinboardMapper.pinboardMapper();
+		this.sMapper = SubscriptionMapper.subscriptionMapper();
 	}
 	/*
 	 * ________________________________________________________________________
@@ -125,7 +127,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * ABSCHNITT Start - Methoden für Pinboard-Objekte
 	 * ________________________________________________________________________
 	 */
-	
+
 	/**
 	 * Anlegen eines Pinboards. Dies führt zu einer Speicherung bzw. Ablage in der
 	 * Datenbank.
@@ -148,7 +150,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 	@Override
 	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException {
-		
+
 		return this.pMapper.findByOwner(u);
 	}
 	/*
@@ -156,4 +158,48 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * ABSCHNITT Ende - Methoden für Pinboard-Objekte
 	 * ________________________________________________________________________
 	 */
+
+	/*
+	 * ________________________________________________________________________
+	 * ABSCHNITT Start - Methoden für Subscription-Objekte
+	 * ________________________________________________________________________
+	 */
+
+	/**
+	 * Anlegen eines Abonnements. Dies führt zu einer Speicherung bzw. Ablage in der
+	 * Datenbank. Einem Nutzer wird eine Pinboard zugewiesen. Die kann sich auf
+	 * seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines anderen
+	 * Nutzers, die abonniert wird.
+	 */
+	@Override
+	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException {
+
+		Subscription s = new Subscription();
+
+		s.setUserId(userId);
+		s.setPinboardId(pinboardId);
+		// s.setCreateDate(new Timestamp(System.currentTimeMillis()));
+
+		s.setId(1);
+
+		return this.sMapper.insert(s);
+	}
+
+	/**
+	 * Suche nach dem Nutzer diesem eine Pinnwand zugeordnet ist. Dies kann sich auf
+	 * seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines anderen
+	 * nutzers, die abonniert wurde.
+	 */
+	@Override
+	public Subscription getSubscriptionByUser(int userId) throws IllegalArgumentException {
+
+		return this.sMapper.findByUserId(userId);
+	}
+	
+	/*
+	 * ________________________________________________________________________
+	 * ABSCHNITT Ende - Methoden für Subscription-Objekte
+	 * ________________________________________________________________________
+	 */
+
 }

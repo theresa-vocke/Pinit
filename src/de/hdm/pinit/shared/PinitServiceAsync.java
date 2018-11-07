@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.pinit.shared.bo.Pinboard;
+import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
 
 /**
@@ -21,6 +22,10 @@ public interface PinitServiceAsync {
 	void createPinboard(User u, AsyncCallback<Pinboard> callback);
 
 	void getPinboardByOwner(User u, AsyncCallback<Pinboard> callback);
+
+	void createSubscription(int userId, int pinboardId, AsyncCallback<Subscription> callback);
+
+	void getSubscriptionByUser(int userId, AsyncCallback<Subscription> callback);
 	
 	
 }
