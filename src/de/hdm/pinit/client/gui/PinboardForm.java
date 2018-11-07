@@ -19,7 +19,7 @@ public class PinboardForm extends VerticalPanel {
 	Button removeBtn = new Button("Abonnement aufheben");
 
 	public void onLoad() {
-		
+		super.onLoad();
 		this.add(nicknameLabel);
 		this.add(removeBtn);
 	}

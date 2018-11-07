@@ -21,8 +21,11 @@ public class PinboardCell extends AbstractCell<Pinboard> {
 			return;
 		}
 
+		// Zum späteren Zeitpunkt muss hier aus der SubscriptionTabelle die Nicknamen
+		// der PinboardOwner herausgelesen werden. Diese Pinboards wurden vom
+		// angemeldeten Nutzer abonniert
 		sb.appendHtmlConstant("<div>");
-		sb.appendEscaped(value.getUser().getNickname());
+		sb.append(value.getId());
 		sb.appendHtmlConstant("</div>");
 
 	}

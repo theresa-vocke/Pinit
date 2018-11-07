@@ -63,6 +63,8 @@ public class Pinit implements EntryPoint {
 		
 		//PostingForm pof = new PostingForm();
 		
+		
+		// Neues VerticalPanel Abonnementsuche 
 		SubscriptionButton sb = new SubscriptionButton();
 		
 		/*
@@ -82,8 +84,9 @@ public class Pinit implements EntryPoint {
 	
 		 //List <Pinboard> list = pcl.getPinboardDataProvider().getList();
 		
-		 RootPanel.get("Navigator").add(pcl);
-		 RootPanel.get("Details").add(pif);
+		 RootPanel.get("pinboardlist").add(pcl);
+		 RootPanel.get("details").add(pif);
+		 RootPanel.get("subscription").add(sb);
 		
 	}
 
