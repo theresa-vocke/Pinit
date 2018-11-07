@@ -52,8 +52,8 @@ public interface PinitService extends RemoteService {
 	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException;
 
 
-	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException;
+	public Subscription createSubscription(int userId, int pinboardId);
 
-	Subscription getSubscriptionByUser(int userId) throws IllegalArgumentException;
+	public Subscription getSubscriptionByUser(int userId);
 	
 }

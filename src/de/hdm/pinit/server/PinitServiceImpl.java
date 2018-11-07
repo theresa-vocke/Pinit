@@ -3,6 +3,7 @@ package de.hdm.pinit.server;
 import java.sql.Timestamp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.pinit.server.db.PinboardMapper;
+import de.hdm.pinit.server.db.SubscriptionMapper;
 import de.hdm.pinit.server.db.UserMapper;
 import de.hdm.pinit.shared.PinitService;
 import de.hdm.pinit.shared.bo.Pinboard;
@@ -43,6 +44,12 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * abgleicht.
 	 */
 	private PinboardMapper pMapper = null;
+
+	/**
+	 * Referenz auf den DatenbankMapper, der Pinboardobjekte mit der Datenbank
+	 * abgleicht.
+	 */
+	private SubscriptionMapper sMapper = null;
 
 	/*
 	 * ________________________________________________________________________
@@ -129,8 +136,8 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 
 	/**
-	 * Anlegen eines Pinboards. Dies führt zu einer Speicherung bzw. Ablage in der
-	 * Datenbank.
+	 * Anlegen eines Pinboards bei Registrierung des Nutzers. Dies führt zu einer
+	 * Speicherung bzw. Ablage in der Datenbank.
 	 */
 	@Override
 	public Pinboard createPinboard(User u) throws IllegalArgumentException {
@@ -195,7 +202,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 		return this.sMapper.findByUserId(userId);
 	}
-	
+
 	/*
 	 * ________________________________________________________________________
 	 * ABSCHNITT Ende - Methoden für Subscription-Objekte
