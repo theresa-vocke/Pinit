@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.pinit.shared.bo.Subscription;
 
@@ -79,11 +80,11 @@ public class SubscriptionMapper {
 
 				/*
 				 * Einfügeoperation. Damit die Objekte auf die Tabelle abgebildet werden. Wir
-				 * holen uns über unser SubscriptionObjekt die Werte, die auf die Tabelle abgebildet
-				 * werden sollen.
+				 * holen uns über unser SubscriptionObjekt die Werte, die auf die Tabelle
+				 * abgebildet werden sollen.
 				 */
-				stmt.executeUpdate("INSERT INTO subscription (nutzerid, pinboardid) " + "VALUES (" + s.getUserId() + 
-						"','" + s.getPinboardId() + "')");
+				stmt.executeUpdate("INSERT INTO subscription (nutzerid, pinboardid) " + "VALUES (" + s.getUserId()
+						+ "','" + s.getPinboardId() + "')");
 			}
 
 		} catch (SQLException e) {
@@ -96,7 +97,7 @@ public class SubscriptionMapper {
 
 		return s;
 	}
-	
+
 	/**
 	 * Löschen der Daten eines <code>Subscription</code>-Objekts aus der Datenbank.
 	 */
@@ -106,35 +107,38 @@ public class SubscriptionMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM subscription " + "WHERE pinboardid=" + s.getPinboardId()
-					+ "AND userid=" + s.getUserId());
+			stmt.executeUpdate("DELETE FROM subscription " + "WHERE pinboardid=" + s.getPinboardId() + "AND userid="
+					+ s.getUserId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Auslesen aller Subscription-Objekte mit gegebenem Nicknamen
+	 * Auslesen aller <code>Subscription</code>-Objekte nach Nutzern
 	 */
-	public Subscription findByUserId(int userId) {
+	public Vector<Subscription> findByUserId(int userId) {
 		Connection con = DBConnection.connection();
+
+		Vector<Subscription> sub = new Vector<Subscription>();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT userid, pinboardid " + "FROM subscription "
-					+ "WHERE userid LIKE '" + userId);
+			ResultSet rs = stmt
+					.executeQuery("SELECT userid, pinboardid " + "FROM subscription " + "WHERE userid LIKE '" + userId);
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
-			 * Ergebnisse werden in ein Subscription- Objekt mit den Setter-Methoden rein gepackt.
+			 * Ergebnisse werden in ein Subscription- Objekt mit den Setter-Methoden rein
+			 * gepackt.
 			 */
 			while (rs.next()) {
 				Subscription s = new Subscription();
 				s.setUserId(rs.getInt("userid"));
 				s.setPinboardId(rs.getInt("pinboardid"));
-				
-				return s;
+
+				sub.add(s);
 
 			}
 		} catch (SQLException e) {
@@ -142,10 +146,42 @@ public class SubscriptionMapper {
 			return null;
 		}
 
-		return null;
+		return sub;
 	}
 
-	
-	
-	
+	/**
+	 * Auslesen aller <code>Subscription</code>-Objekte nach Pinnwänden
+	 */
+	public Vector<Subscription> findByPinboardId(int pinboardId) {
+		Connection con = DBConnection.connection();
+
+		Vector<Subscription> sub = new Vector<Subscription>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT userid, pinboardid " + "FROM subscription " + "WHERE pinboardid LIKE '" + pinboardId);
+
+			/*
+			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
+			 * Ergebnisse werden in ein Subscription- Objekt mit den Setter-Methoden rein
+			 * gepackt.
+			 */
+			while (rs.next()) {
+				Subscription s = new Subscription();
+				s.setUserId(rs.getInt("userid"));
+				s.setPinboardId(rs.getInt("pinboardid"));
+
+				sub.add(s);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return sub;
+	}
+
 }

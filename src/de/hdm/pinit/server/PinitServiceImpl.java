@@ -267,9 +267,9 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * Suche nach einer Pinnwand anhand des dazugehörigen Nutzers.
 	 */
 	@Override
-	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException {
-
-		return this.pMapper.findByOwner(u);
+	public Pinboard getPinboardByOwner(int userId) throws IllegalArgumentException {
+					
+		return this.pMapper.findByOwner(userId);
 	}
 
 	/**

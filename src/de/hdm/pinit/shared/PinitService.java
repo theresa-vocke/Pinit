@@ -44,12 +44,9 @@ public interface PinitService extends RemoteService {
 	 * getPinboardByOwner evtl. dass das Pinboard dann direkt angezeigt wird, wenn der Login abgeschlossen ist
 	 */
 
-	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException;
-
-
 	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException;
 
-	void Vector<Subscription> getSubscriptionByUser(int userId) throws IllegalArgumentException;
+	public Vector<Subscription> getSubscriptionByUser(int userId) throws IllegalArgumentException;
 
 	public Vector<User> getAllUser() throws IllegalArgumentException;
 
@@ -60,6 +57,8 @@ public interface PinitService extends RemoteService {
 	public Pinboard getPinboardBySubscription(Subscription s) throws IllegalArgumentException;
 
 	public Vector<User> getAllSubscriptionsByUser(int userId) throws IllegalArgumentException;
+
+	Pinboard getPinboardByOwner(int userId);
 
 	
 }

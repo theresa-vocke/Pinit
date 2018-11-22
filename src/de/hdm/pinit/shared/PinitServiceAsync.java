@@ -22,7 +22,7 @@ public interface PinitServiceAsync {
 
 	void createPinboard(int ownerid, AsyncCallback<Pinboard> callback);
 
-	void getPinboardByOwner(User u, AsyncCallback<Pinboard> callback);
+	void getPinboardByOwner(int userId, AsyncCallback<Pinboard> callback);
 
 	void createSubscription(int userId, int pinboardId, AsyncCallback<Subscription> callback);
 

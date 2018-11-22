@@ -130,16 +130,16 @@ public class PinboardMapper {
 	}
 
 	/**
-	 * Auslesen aller Pinboard-Objekte mit gegebenem Nicknamen
+	 * Auslesen aller <code>Pinboard</code>-Objekte nach übergebener UserId
 	 */
-	public Pinboard findByOwner(User u) {
+	public Pinboard findByOwner(int userId) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid " + "FROM pinboard "
-					+ "WHERE ownerid LIKE '" + u + "' ORDER BY ownerid");
+					+ "WHERE ownerid LIKE '" + userId + "' ORDER BY ownerid");
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
@@ -150,7 +150,7 @@ public class PinboardMapper {
 				p.setId(rs.getInt("id"));
 				p.setCreateDate(rs.getTimestamp("createdate"));
 				p.setOwnerId(rs.getInt("ownerid"));
-				
+
 				return p;
 
 			}
@@ -162,4 +162,37 @@ public class PinboardMapper {
 		return null;
 	}
 
+	/**
+	 * Auslesen eines <code>Pinboard</code>-Objekts nach der übergebenen PinboardId aus der
+	 * SubscriptionTabelle
+	 */
+	public Pinboard findById(int pinboardId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid " + "FROM pinboard " + "WHERE id LIKE '"
+					+ pinboardId + "' ORDER BY pinboardid");
+
+			/*
+			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
+			 * Ergebnisse werden in ein UserObjekt mit den Setter-Methoden rein gepackt.
+			 */
+			while (rs.next()) {
+				Pinboard p = new Pinboard();
+				p.setId(rs.getInt("id"));
+				p.setCreateDate(rs.getTimestamp("createdate"));
+				p.setOwnerId(rs.getInt("ownerid"));
+
+				return p;
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
 }
