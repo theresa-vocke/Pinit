@@ -1,6 +1,7 @@
 package de.hdm.pinit.server;
 
 import java.sql.Timestamp;
+import java.util.Vector;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.pinit.server.db.PinboardMapper;
 import de.hdm.pinit.server.db.SubscriptionMapper;
@@ -60,12 +61,13 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	/**
 	 * <p>
 	 * Ein <code>RemoteServiceServlet</code> wird unter GWT mittels
-	 * <code>GWT.create(Klassenname.class)</code> Client-seitig erzeugt. Hierzu ist
-	 * ein solcher No-Argument-Konstruktor anzulegen.Bei diesem Aufruf können dem
-	 * Konstruktor keine Werte übergebene werden, weshalb die Init-Methode die
-	 * Initalisierung der Mapperinstanzen ausführen muss. Immer wenn eine Instanz
-	 * der ServletImplementierungsklasse instanziiert wird, muss die init-Methode
-	 * direkt nach <code>GWT.create(Klassenname.class)</code> aufgerufen werden. Der
+	 * <code>GWT.create(Klassenname.class)</code> Client-seitig erzeugt. Hierzu
+	 * ist ein solcher No-Argument-Konstruktor anzulegen.Bei diesem Aufruf
+	 * können dem Konstruktor keine Werte übergebene werden, weshalb die
+	 * Init-Methode die Initalisierung der Mapperinstanzen ausführen muss. Immer
+	 * wenn eine Instanz der ServletImplementierungsklasse instanziiert wird,
+	 * muss die init-Methode direkt nach
+	 * <code>GWT.create(Klassenname.class)</code> aufgerufen werden. Der
 	 * NoArgumentConstructors wird lediglich dahingehend erweitert, die
 	 * Ausnahmebehandlung durchführen zu können.
 	 */
@@ -93,8 +95,8 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 	/**
 	 * Anlegen eines Nutzers. Dies führt zu einer Speicherung bzw. Ablage in der
-	 * Datenbank. Wenn ein Nutzer angelegt wird, wird eine Pinnwand erstellt und ihm
-	 * zugeordnet.
+	 * Datenbank. Wenn ein Nutzer angelegt wird, wird eine Pinnwand erstellt und
+	 * ihm zugeordnet.
 	 */
 	@Override
 	public User createUser(String nickname, String email) throws IllegalArgumentException {
@@ -105,8 +107,8 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		u.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
 		/*
-		 * Setzen einer vorläufigen ID, die in der DB nachträglich richtig zugeordnet
-		 * wird.
+		 * Setzen einer vorläufigen ID, die in der DB nachträglich richtig
+		 * zugeordnet wird.
 		 */
 		u.setId(1);
 
@@ -123,6 +125,115 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		return this.uMapper.findById(id);
 	}
 
+	/**
+	 * Alle Nutzer werden ausgelesen und in einem Vektor zurückgegeben.
+	 */
+
+	@Override
+	public Vector<User> getAllUser() {
+		Vector<User> u = new Vector<User>();
+		u = this.uMapper.findAll();
+
+		return u;
+	}
+
+	/**
+	 * Anhand der übergebenen E-Mail wird überprüft, ob sich der Nutzer mit der
+	 * entsprechenden Email bereits registriert hat.
+	 */
+
+	@Override
+	public User checkUser(String email) {
+		/*
+		 * Leerer Vektor, welchem alle in der DB gespeicherten Nutzer zugewiesen
+		 * werden.
+		 */
+		Vector<User> u = getAllUser();
+		/*
+		 * Jeder einzelne Nutzer innerhalb der Liste wird überprüft.
+		 */
+		for (User user : u) {
+			/*
+			 * Dies geschieht so lange, bis die übergebene EMail mit der eines
+			 * Nutzers (im Vektor) übereinstimmt.
+			 */
+			if (email.equals(user.getEmail())) {
+				// Der User wird zurückgegeben.
+				return user;
+			}
+		}
+		/*
+		 * Falls nicht, wird nichts zurück gegeben und der aktuelle Nutzer muss
+		 * sich dann registrieren.
+		 */
+		return null;
+	}
+
+	/**
+	 * Für einen User wird anhand seiner ID überprüft, welche anderen User (mit
+	 * deren Pinnwände) er abonniert hat.
+	 */
+	@Override
+	public Vector<User> getAllSubscriptionsByUser(int userId) {
+
+		/*
+		 * leerer Vektor wird angelegt, in welchen dann alle abonnierten User
+		 * gespeichert werden.
+		 */
+		Vector<User> u = new Vector<User>();
+		/*
+		 * leerer Vektor wird angelegt, in welchen alle Pinnwände gespeicher
+		 * werden, die der User abonniert hat.
+		 */
+		Vector<Pinboard> p = new Vector<Pinboard>();
+		/*
+		 * Vektor wird angelegt, in welchen alle einzelnen Abos des Users direkt
+		 * gespeichert werden. Anhand eines Nutzers mit übergebener userID.
+		 */
+		Vector<Subscription> s = this.getSubscriptionByUser(userId);
+
+		/*
+		 * Zu jedem einzeln gespeicherte Abo im Subscription Vektor wird die
+		 * dazu gehörende Pinnwand geholt. Für jedes Exemplar in diesem Vektor
+		 * wird die Schleife ausgeführt.
+		 */
+		for (Subscription subscription : s) {
+			/*
+			 * Zu dem zuvor angelegten leeren Pinnwand Vektor werden nun die
+			 * abonnierten Pinnwände hinzugefügt.
+			 */
+			p.add(getPinboardBySubscription(subscription));
+		}
+		/*
+		 * Zu jedem einzeln gespeicherte Pinboard-Objekt im Pinnwand Vektor wird
+		 * der dazu gehörige User geholt. Für jedes Exemplar in diesem Vektor
+		 * wird die Schleife ausgeführt.
+		 */
+		for (Pinboard pinboard : p) {
+			/*
+			 * Zu dem zuvor angelegten leeren User Vektor werden nun die
+			 * entsprechenden Eigentümer Pinnwände ausgelesen und dem Vektor
+			 * hinzugefügt.
+			 */
+			u.add(getOwnerByPinboard(pinboard));
+		}
+		/*
+		 * Alle Owner der abonnierten Pinnwände, welcher der übergebene Nutzer
+		 * abonniert hat, werden als Vektor zurück gegeben.
+		 */
+		return u;
+	}
+
+	/**
+	 * Der Eigentümer einer Pinnwand wird ausgelesen.
+	 */
+	@Override
+	public User getOwnerByPinboard(Pinboard p) {
+		User u = new User();
+		u = this.getUserById(p.getOwnerId());
+		return u;
+	}
+
 	/*
 	 * ________________________________________________________________________
 	 * ABSCHNITT Ende - Methoden für User-Objekte
@@ -136,15 +247,15 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 
 	/**
-	 * Anlegen eines Pinboards bei Registrierung des Nutzers. Dies führt zu einer
-	 * Speicherung bzw. Ablage in der Datenbank.
+	 * Anlegen eines Pinboards bei Registrierung des Nutzers. Dies führt zu
+	 * einer Speicherung bzw. Ablage in der Datenbank.
 	 */
 	@Override
-	public Pinboard createPinboard(User u) throws IllegalArgumentException {
+	public Pinboard createPinboard(int ownerId) throws IllegalArgumentException {
 
 		Pinboard p = new Pinboard();
 
-		p.setOwnerId(u.getId());
+		p.setOwnerId(ownerId);
 		p.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
 		p.setId(1);
@@ -160,6 +271,21 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 		return this.pMapper.findByOwner(u);
 	}
+
+	/**
+	 * Eine Pinnwand wird anhand eines übergebenen Abo-Objektes ausgelesen.
+	 */
+	@Override
+	public Pinboard getPinboardBySubscription(Subscription s) {
+
+		/*
+		 * Über das übergebene Abo-Objekt wird auf die Pinnwand-ID zugegriffen
+		 * und darüber wird ein tatsächlichen Pinnwand-Objekt in der DB gesucht.
+		 */
+		Pinboard p = pMapper.findById(s.getPinboardId());
+		return p;
+	}
+
 	/*
 	 * ________________________________________________________________________
 	 * ABSCHNITT Ende - Methoden für Pinboard-Objekte
@@ -173,10 +299,10 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 
 	/**
-	 * Anlegen eines Abonnements. Dies führt zu einer Speicherung bzw. Ablage in der
-	 * Datenbank. Einem Nutzer wird eine Pinboard zugewiesen. Die kann sich auf
-	 * seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines anderen
-	 * Nutzers, die abonniert wird.
+	 * Anlegen eines Abonnements. Dies führt zu einer Speicherung bzw. Ablage in
+	 * der Datenbank. Einem Nutzer wird eine Pinboard zugewiesen. Die kann sich
+	 * auf seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines
+	 * anderen Nutzers, die abonniert wird.
 	 */
 	@Override
 	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException {
@@ -193,12 +319,12 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	}
 
 	/**
-	 * Suche nach dem Nutzer diesem eine Pinnwand zugeordnet ist. Dies kann sich auf
-	 * seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines anderen
-	 * nutzers, die abonniert wurde.
+	 * Suche nach dem Nutzer, dem eine Pinnwand zugeordnet ist. Dies kann sich
+	 * auf seine eigene Pinnwand beziehen oder jedoch auf eine Pinnwand eines
+	 * anderen nutzers, die abonniert wurde.
 	 */
 	@Override
-	public Subscription getSubscriptionByUser(int userId) throws IllegalArgumentException {
+	public Vector<Subscription> getSubscriptionByUser(int userId) throws IllegalArgumentException {
 
 		return this.sMapper.findByUserId(userId);
 	}

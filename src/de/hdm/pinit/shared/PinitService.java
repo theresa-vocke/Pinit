@@ -1,10 +1,9 @@
 package de.hdm.pinit.shared;
 
-import java.sql.Timestamp;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import java.util.Vector;
 import de.hdm.pinit.shared.bo.Pinboard;
 import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
@@ -39,11 +38,7 @@ public interface PinitService extends RemoteService {
 
 	public User getUserById(int id) throws IllegalArgumentException;
 
-	/**
-	 *  Pinnwand für diesen User erstellen (createPinboard)
-	 */
-
-	public Pinboard createPinboard(User u) throws IllegalArgumentException;
+	public Pinboard createPinboard(int ownerid);
 	
 	/**
 	 * getPinboardByOwner evtl. dass das Pinboard dann direkt angezeigt wird, wenn der Login abgeschlossen ist
@@ -52,8 +47,19 @@ public interface PinitService extends RemoteService {
 	public Pinboard getPinboardByOwner(User u) throws IllegalArgumentException;
 
 
-	public Subscription createSubscription(int userId, int pinboardId);
+	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException;
 
-	public Subscription getSubscriptionByUser(int userId);
+	void Vector<Subscription> getSubscriptionByUser(int userId) throws IllegalArgumentException;
+
+	public Vector<User> getAllUser() throws IllegalArgumentException;
+
+	public User checkUser(String email) throws IllegalArgumentException;
+
+	public User getOwnerByPinboard(Pinboard p) throws IllegalArgumentException;
+
+	public Pinboard getPinboardBySubscription(Subscription s) throws IllegalArgumentException;
+
+	public Vector<User> getAllSubscriptionsByUser(int userId) throws IllegalArgumentException;
+
 	
 }

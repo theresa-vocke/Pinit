@@ -1,6 +1,7 @@
 package de.hdm.pinit.shared;
 
 import java.sql.Timestamp;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -19,13 +20,23 @@ public interface PinitServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createPinboard(User u, AsyncCallback<Pinboard> callback);
+	void createPinboard(int ownerid, AsyncCallback<Pinboard> callback);
 
 	void getPinboardByOwner(User u, AsyncCallback<Pinboard> callback);
 
 	void createSubscription(int userId, int pinboardId, AsyncCallback<Subscription> callback);
 
-	void getSubscriptionByUser(int userId, AsyncCallback<Subscription> callback);
+	void getSubscriptionByUser(int userId, AsyncCallback<Vector<Subscription>> callback);
+
+	void getAllUser(AsyncCallback<Vector<User>> callback);
+
+	void checkUser(String email, AsyncCallback<User> callback);
 	
+	void getOwnerByPinboard(Pinboard p, AsyncCallback<User> callback);
+
+	void getPinboardBySubscription(Subscription s, AsyncCallback<Pinboard> callback);
+
+	void getAllSubscriptionsByUser(int userId, AsyncCallback<Vector<User>> callback);
 	
+
 }

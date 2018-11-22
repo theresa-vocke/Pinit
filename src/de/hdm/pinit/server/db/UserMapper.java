@@ -151,6 +151,7 @@ public class UserMapper {
 		}
 	}
 	
+	
 	/**
 	 * Auslesen aller User-Objekte mit gegebenem Nicknamen
 	 */
@@ -221,6 +222,37 @@ public class UserMapper {
 		}
 
 		return null;
+	}
+	
+	public Vector<User> findAll(){
+		Connection con = DBConnection.connection();
+		
+		Vector<User> result = new Vector<User>();
+		
+		try{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ " FROM user ORDER BY user_id");
+			
+			
+			while (rs.next()){
+				User u = new User();
+				u.setId(rs.getInt("user_id"));
+				u.setPrename(rs.getString("prename"));
+				u.setSurname(rs.getString("surname"));
+				u.setNickname(rs.getString("nickname"));
+				u.setEmail(rs.getString("email"));
+				u.setCreateDate(rs.getTimestamp("createdate"));
+				
+				
+				result.add(u);
+				} 
+			}  
+		catch (SQLException e) {
+		e.printStackTrace();
+		}
+		return result;
+		
 	}
 	
 
