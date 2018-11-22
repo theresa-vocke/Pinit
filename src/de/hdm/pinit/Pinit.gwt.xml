@@ -28,4 +28,5 @@
 
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>
+  <inherits name="com.google.gwt.logging.Logging"/>
 </module>

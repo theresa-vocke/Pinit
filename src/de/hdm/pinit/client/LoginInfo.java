@@ -1,16 +1,13 @@
 package de.hdm.pinit.client;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-import java.io.Serializable;
+public class LoginInfo implements IsSerializable {
 
-public class LoginInfo implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 	
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;
 	private String emailAddress;
-	private String nickname;
 	
 	// prügen, ob der User eingeloggt ist 
 	public boolean isLoggedIn() {
@@ -40,12 +37,6 @@ public class LoginInfo implements Serializable {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+
 	
 }

@@ -50,6 +50,20 @@ body {
 }
 
 
+.login-button {
+ font-family: Arial;
+ color: #000000;
+ font-size: 15px;
+ border: solid #e3e3e3 1px;
+ margin-left: 11px;
+ margin-right: 5px;
+ position: absolute;
+ top: 40px;
+ right: 40px;
+}
+
+
+
 
 #header {
 	height: 80px;
