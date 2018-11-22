@@ -11,11 +11,10 @@ public class PinboardForm extends VerticalPanel {
 
 	PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
 		
-	PinboardCellList<Pinboard> pcl = null;
 
 	Pinboard pinboardToDisplay = null;
 	
-	Label nicknameLabel = new Label("Pinnwand von:");
+	Label nicknameLabel = new Label("Meine Pinnwand");
 	Button removeBtn = new Button("Abonnement aufheben");
 
 	public void onLoad() {
@@ -34,10 +33,6 @@ public class PinboardForm extends VerticalPanel {
 			removeBtn.setEnabled(false);
 			nicknameLabel.setText("");
 		}
-	}
-	
-	public void setPcl(PinboardCellList<Pinboard> pcl) {
-		this.pcl = pcl;
 	}
 
 }
