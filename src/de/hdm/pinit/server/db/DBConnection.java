@@ -92,12 +92,15 @@ public class DBConnection {
 				/**
 				 * con = (Connection) DriverManager.getConnection(googleUrl);
 				 */
+				
+				
+				//Was soll das hier 
 			} catch (Exception e) {
 				con = null;
 				e.printStackTrace();
 				throw new RuntimeException("Das hat nicht funktioniert!" + e.getMessage().toString()
 						+ "Versuchte Infos: " + user + ", " + pass + ", " + url);
-
+ 
 			}
 		}
 

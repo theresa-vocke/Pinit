@@ -66,9 +66,14 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * können dem Konstruktor keine Werte übergebene werden, weshalb die
 	 * Init-Methode die Initalisierung der Mapperinstanzen ausführen muss. Immer
 	 * wenn eine Instanz der ServletImplementierungsklasse instanziiert wird,
-	 * muss die init-Methode direkt nach
-	 * <code>GWT.create(Klassenname.class)</code> aufgerufen werden. Der
-	 * NoArgumentConstructors wird lediglich dahingehend erweitert, die
+	 * muss die init-Methode direkt nach <code>GWT.create(Klassenname.class)</code> 
+	 * aufgerufen werden. 
+	 * Bei der ersten Erzeugung des Proxy beim Laden der onModuleLoad() wird die 
+	 * Instanz des Servlets erzeugt, worüber zunächst das Servlet zum ersten Mal 
+	 * geladen wird. 
+	 * Wird das Servlet über eine HTTP-Anfrage angesprochen, so wird diese einzige
+	 * konfigurierte Instanz des Servlets zurückgegeben.
+	 * Der NoArgumentConstructors wird lediglich dahingehend erweitert, die
 	 * Ausnahmebehandlung durchführen zu können.
 	 */
 	public PinitServiceImpl() throws IllegalArgumentException {

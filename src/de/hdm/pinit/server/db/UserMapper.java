@@ -81,7 +81,7 @@ public class UserMapper {
 			 * vorhanden, ein einzeiliges Ergebnis zurück. Hier überprüfen wir,
 			 * was der momentan höchste Primärschlüsselwert ist.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM user ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM user");
 
 			/*
 			 * Next ist wie ein Iterator, setzt immer auf das aktuelle Element
@@ -232,12 +232,12 @@ public class UserMapper {
 		try{
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ " FROM user ORDER BY user_id");
+					+ " FROM user ");
 			
 			
 			while (rs.next()){
 				User u = new User();
-				u.setId(rs.getInt("user_id"));
+				u.setId(rs.getInt("id"));
 				u.setPrename(rs.getString("prename"));
 				u.setSurname(rs.getString("surname"));
 				u.setNickname(rs.getString("nickname"));

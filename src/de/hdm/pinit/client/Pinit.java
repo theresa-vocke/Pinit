@@ -38,8 +38,8 @@ public class Pinit implements EntryPoint {
 	private Button loginButton = new Button("Login");
 
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label welcomeLabel = new Label("Herzlich Willkommen bei Pinit");
-	private Label loginLabel = new Label("Bitte melde dich an!");
+	private Label welcomeLabel = new Label("Bitte logge dich ein, um zu deiner persönlichen Pinnwand zu gelangen!");
+	private Label loginLabel = new Label("Herzlich Willkommen bei Pinit!");
 
 	private Anchor signInLink = new Anchor("Login");
 	private Anchor signOutLink = new Anchor("Logout");
@@ -132,11 +132,11 @@ public class Pinit implements EntryPoint {
 							else {
 
 								Window.alert("Sie sind noch nicht bei Pinit registriert");
-								RootPanel.get("Details").clear();
+								RootPanel.get("details").clear();
 
 								// RegistrationForm wird aufgerufen, damit der
 								// User sich registrieren kann
-								RootPanel.get("Details").add(new RegistrationForm());
+								RootPanel.get("details").add(new RegistrationForm());
 							}
 						}
 					});
@@ -157,9 +157,9 @@ public class Pinit implements EntryPoint {
 	public void loadLogin() {
 
 		loginPanel.setSpacing(20);
-
-		loginPanel.add(loginLabel);
 		loginPanel.add(welcomeLabel);
+		loginPanel.add(loginLabel);
+		
 
 		signInLink.setHref(loginInfo.getLoginUrl());
 
@@ -168,8 +168,9 @@ public class Pinit implements EntryPoint {
 		 * Navigator zugeordnet, welche auf dem RootPanel liegen
 		 */
 		RootPanel.get("details").add(loginPanel);
-		RootPanel.get("pinboardlist").add(loginButton);
-
+		RootPanel.get("details").clear();
+		RootPanel.get("details").add(loginButton);
+		
 		loginButton.setWidth("100px");
 		loginButton.setStylePrimaryName("login-button");
 		loginButton.addClickHandler(new ClickHandler() {
@@ -181,12 +182,12 @@ public class Pinit implements EntryPoint {
 		});
 	}
 
-	private void loadPinitAdmin(int userId) {
+	private void loadPinitAdmin(int id) {
 		// Erstellen des Logout-Links
 		signOutLink.setHref(loginInfo.getLogoutUrl());
 		PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
 
-		pinitService.getUserById(userId, new AsyncCallback<User>() {
+		pinitService.getUserById(id, new AsyncCallback<User>() {
 
 			@Override
 			public void onSuccess(User result) {
@@ -198,15 +199,16 @@ public class Pinit implements EntryPoint {
 				Window.alert("Fehler");
 			}
 		});
-
-		RootPanel.get("header").add(logout);
-
 		RootPanel.get("details").clear();
+		
+		RootPanel.get("details").add(logout);
+		//RootPanel.get("details").clear();
+		
 		RootPanel.get("pinboardlist").add(new PinboardCellList());
 		// RootPanel.get("Details").add(new StartseiteForm());
 
-		logout.setWidth("150px");
-		logout.setStylePrimaryName("login-btn");
+		logout.setWidth("100px");
+		logout.setStylePrimaryName("logout-button");
 
 		logout.addClickHandler(new ClickHandler() {
 
@@ -234,7 +236,7 @@ public class Pinit implements EntryPoint {
 		public void onLoad() {
 			super.onLoad();
 
-			Grid registerGrid = new Grid(3, 2);
+			Grid registerGrid = new Grid(3,2);
 			registerPanel.add(registerGrid);
 
 			registerGrid.setWidget(0, 0, nickname);
@@ -270,12 +272,12 @@ public class Pinit implements EntryPoint {
 
 			@Override
 			public void onSuccess(User user) {
-				Cookies.setCookie("id", "" + user.getId());
+				Cookies.setCookie("id", ""+user.getId());
 				Cookies.setCookie("email", user.getEmail());
 
 				pinitService.createPinboard(user.getId(), new CreatePinboardCallback());
 
-				Window.alert("Glückwunsch " + nicknameBox.getText() + " ! Sie sind jetzt Mitglied bei Pinit!");
+				Window.alert("Glückwunsch " + nicknameBox.getText()+ " ! Sie sind jetzt Mitglied bei Pinit!");
 
 				loadPinitAdmin(user.getId());
 
