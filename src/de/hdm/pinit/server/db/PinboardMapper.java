@@ -78,7 +78,7 @@ public class PinboardMapper {
 			 * Ergebnis zurück. Hier überprüfen wir, was der momentan höchste
 			 * Primärschlüsselwert ist.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM pinboard ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM pinboard");
 
 			/*
 			 * Next ist wie ein Iterator, setzt immer auf das aktuelle Element in der
@@ -99,7 +99,7 @@ public class PinboardMapper {
 				 * holen uns über unser PinboardObjekt die Werte, die auf die Tabelle abgebildet
 				 * werden sollen.
 				 */
-				stmt.executeUpdate("INSERT INTO pinboard (id, createdate, ownerid) " + "VALUES (" + p.getId() + "','"
+				stmt.executeUpdate("INSERT INTO pinboard (id, createdate, ownerid) " + "VALUES (" + p.getId() + ",'"
 						+ p.getCreateDate() + "','" + p.getOwnerId() + "')");
 			}
 
@@ -138,8 +138,8 @@ public class PinboardMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid " + "FROM pinboard "
-					+ "WHERE ownerid LIKE '" + userId + "' ORDER BY ownerid");
+			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid FROM pinboard "
+					+ "WHERE ownerid " + userId);
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
@@ -172,8 +172,8 @@ public class PinboardMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid " + "FROM pinboard " + "WHERE id LIKE '"
-					+ pinboardId + "' ORDER BY pinboardid");
+			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid FROM pinboard " + "WHERE id="
+					+ pinboardId);
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese
