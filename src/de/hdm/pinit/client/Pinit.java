@@ -1,6 +1,5 @@
 package de.hdm.pinit.client;
 
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,6 +17,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.pinit.client.gui.ClientSideSettings;
 import de.hdm.pinit.client.gui.PinboardCellList;
+import de.hdm.pinit.client.gui.PinboardForm;
 import de.hdm.pinit.shared.LoginServiceAsync;
 import de.hdm.pinit.shared.PinitServiceAsync;
 import de.hdm.pinit.shared.bo.Pinboard;
@@ -37,7 +37,7 @@ public class Pinit implements EntryPoint {
 	private Button logout = new Button("Logout");
 	private Button loginButton = new Button("Login");
 	private Button subbtn = new Button("Neues Abonnement");
-	private Button myPinboardBtn = new Button ("Meine Pinnwand");
+	private Button myPinboardBtn = new Button("Meine Pinnwand");
 	private VerticalPanel subPanel = new VerticalPanel();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
@@ -51,8 +51,8 @@ public class Pinit implements EntryPoint {
 	Label nickname = new Label();
 
 	/*
-	 * <code>onModuleLoad()</code> muss implementiert werden, da es Bestandteil
-	 * des Interfaces EntryPoint ist und wir diese implementieren
+	 * <code>onModuleLoad()</code> muss implementiert werden, da es Bestandteil des
+	 * Interfaces EntryPoint ist und wir diese implementieren
 	 * 
 	 * In der onModuleLoad werden 2 Proxy Objekte generiert. Außerdem wird die
 	 * login() Methode aufgerufen, die einen User einloggt bzw. ihn auf das
@@ -61,25 +61,25 @@ public class Pinit implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		/*
-		 * Prüfung ob die Referenzvariable pinitService bereits mit einem Wert
-		 * belegt ist. Ist dies nicht der Fall, so wird die Methode
-		 * getPinitService aus der Klasse ClientSideSettings aufgerufen. Das
-		 * Ergebnis der Methode wird dann pinitService zugewiesen.
+		 * Prüfung ob die Referenzvariable pinitService bereits mit einem Wert belegt
+		 * ist. Ist dies nicht der Fall, so wird die Methode getPinitService aus der
+		 * Klasse ClientSideSettings aufgerufen. Das Ergebnis der Methode wird dann
+		 * pinitService zugewiesen.
 		 */
 		if (pinitService == null) {
 			pinitService = ClientSideSettings.getPinitService();
 		}
 
 		/*
-		 * Prüfung ob die Referenzvariable loginService bereits mit einem Wert
-		 * belegt ist. Ist dies nicht der Fall, so wird die Methode
-		 * getLoginService aus der Klasse ClienStideSettings aufgerufen. Das
-		 * Ergebnis der Methode wird dann loginService zugewiesen.
+		 * Prüfung ob die Referenzvariable loginService bereits mit einem Wert belegt
+		 * ist. Ist dies nicht der Fall, so wird die Methode getLoginService aus der
+		 * Klasse ClienStideSettings aufgerufen. Das Ergebnis der Methode wird dann
+		 * loginService zugewiesen.
 		 */
 		loginService = ClientSideSettings.getLoginService();
 		/*
-		 * die Methode Login aus dem asynchronen Interface LoginService wird
-		 * aufgerufen und die HostPageURL wird übergeben???
+		 * die Methode Login aus dem asynchronen Interface LoginService wird aufgerufen
+		 * und die HostPageURL wird übergeben???
 		 */
 
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
@@ -102,10 +102,9 @@ public class Pinit implements EntryPoint {
 				if (loginInfo.isLoggedIn()) {
 
 					/*
-					 * es wird geprüft, ob derjenige, der sich einloggen möchte,
-					 * bereits ein User ist. Wenn er ein User ist, der sich
-					 * bereits bei Pinit registriert hat, werden Cookies gesetzt
-					 * und die Methode loadPinitAdmin aufgerufen.
+					 * es wird geprüft, ob derjenige, der sich einloggen möchte, bereits ein User
+					 * ist. Wenn er ein User ist, der sich bereits bei Pinit registriert hat, werden
+					 * Cookies gesetzt und die Methode loadPinitAdmin aufgerufen.
 					 */
 					pinitService.checkUser(loginInfo.getEmailAddress(), new AsyncCallback<User>() {
 
@@ -120,8 +119,8 @@ public class Pinit implements EntryPoint {
 							if (result != null) {
 
 								/*
-								 * Cookie wird gesetzt, um später einfacher auf
-								 * den eingeloggten User zugreifen zu können.
+								 * Cookie wird gesetzt, um später einfacher auf den eingeloggten User zugreifen
+								 * zu können.
 								 */
 								Cookies.setCookie("id", "" + result.getId());
 								Cookies.setCookie("email", result.getEmail());
@@ -129,8 +128,8 @@ public class Pinit implements EntryPoint {
 							}
 
 							/*
-							 * falls der User noch nicht registriert ist, wird
-							 * er zum Registrierungsformular weitergeleitet.
+							 * falls der User noch nicht registriert ist, wird er zum Registrierungsformular
+							 * weitergeleitet.
 							 */
 							else {
 
@@ -162,18 +161,17 @@ public class Pinit implements EntryPoint {
 		loginPanel.setSpacing(20);
 		loginPanel.add(welcomeLabel);
 		loginPanel.add(loginLabel);
-		
 
 		signInLink.setHref(loginInfo.getLoginUrl());
 
 		/*
-		 * das LoginPanel und der loginButton werden den div's Details bzw.
-		 * Navigator zugeordnet, welche auf dem RootPanel liegen
+		 * das LoginPanel und der loginButton werden den div's Details bzw. Navigator
+		 * zugeordnet, welche auf dem RootPanel liegen
 		 */
 		RootPanel.get("details").add(loginPanel);
 		RootPanel.get("details").clear();
 		RootPanel.get("details").add(loginButton);
-		
+
 		loginButton.setWidth("100px");
 		loginButton.setStylePrimaryName("login-button");
 		loginButton.addClickHandler(new ClickHandler() {
@@ -203,31 +201,46 @@ public class Pinit implements EntryPoint {
 			}
 		});
 		RootPanel.get("details").clear();
-		
+
 		RootPanel.get("header").add(logout);
-		
+
 		RootPanel.get("subscription").clear();
 		RootPanel.get("subscription").add(subPanel);
-		
+
 		RootPanel.get("pinboardlist").add(new PinboardCellList());
-		
-		
+
 		subPanel.add(subbtn);
 		subPanel.add(myPinboardBtn);
-		subbtn.setWidth("160px");
-		myPinboardBtn.setWidth("160px");
-		subbtn.setStylePrimaryName("subscription-button");
-		myPinboardBtn.setStylePrimaryName("mypinboard-button");
-		logout.addClickHandler(new ClickHandler() {
 
+		subbtn.setWidth("160px");
+		subbtn.setStylePrimaryName("subscription-button");
+		subbtn.addClickHandler(new ClickHandler() {
+
+			// ClickEvent welcher ausgelöst wird sobald der "NeuesAbo-Button" ausgewählt
+			// wird
 			@Override
 			public void onClick(ClickEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				// AboSuchenForm
+
 			}
-			
+
 		});
-		
+
+		myPinboardBtn.setWidth("160px");
+		myPinboardBtn.setStylePrimaryName("mypinboard-button");
+		myPinboardBtn.addClickHandler(new ClickHandler() {
+
+			// ClickEvent welcher ausgelöst wird sobald der "MeinePinnwand-Button"
+			// ausgewählt wird
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("details").clear();
+				
+				RootPanel.get("details").add(new PinboardForm(Integer.parseInt(Cookies.getCookie("id"))));			}
+
+		});
+
 		logout.setWidth("100px");
 		logout.setStylePrimaryName("logout-button");
 
@@ -257,7 +270,7 @@ public class Pinit implements EntryPoint {
 		public void onLoad() {
 			super.onLoad();
 
-			Grid registerGrid = new Grid(3,2);
+			Grid registerGrid = new Grid(3, 2);
 			registerPanel.add(registerGrid);
 
 			registerGrid.setWidget(0, 0, nickname);
@@ -293,12 +306,12 @@ public class Pinit implements EntryPoint {
 
 			@Override
 			public void onSuccess(User user) {
-				Cookies.setCookie("id", ""+user.getId());
+				Cookies.setCookie("id", "" + user.getId());
 				Cookies.setCookie("email", user.getEmail());
 
 				pinitService.createPinboard(user.getId(), new CreatePinboardCallback());
 
-				Window.alert("Glückwunsch " + nicknameBox.getText()+ " ! Sie sind jetzt Mitglied bei Pinit!");
+				Window.alert("Glückwunsch " + nicknameBox.getText() + " ! Sie sind jetzt Mitglied bei Pinit!");
 
 				loadPinitAdmin(user.getId());
 

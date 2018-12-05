@@ -27,7 +27,7 @@ import de.hdm.pinit.shared.bo.User;
 // Zum späteren Zeitpunkt muss hier aus der SubscriptionTabelle die Nicknamen
 // der PinboardOwner herausgelesen werden. Diese Pinboards wurden vom
 // angemeldeten Nutzer abonniert
- sb.appendHtmlConstant("<div style=\"color:#c40000; font-size:28px\">");
+ sb.appendHtmlConstant("<div style=\"color:#c40000; font-size:22px\">");
  sb.appendEscaped(value.getNickname());
  sb.appendHtmlConstant("</div>");
 //
