@@ -126,7 +126,7 @@ public class SubscriptionMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT userid, pinboardid " + "FROM subscription " + "WHERE userid LIKE '" + userId);
+					.executeQuery("SELECT userid, pinboardid " + "FROM subscription " + "WHERE userid=" + userId);
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese

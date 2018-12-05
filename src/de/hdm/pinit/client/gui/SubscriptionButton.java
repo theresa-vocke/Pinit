@@ -7,7 +7,7 @@ public class SubscriptionButton extends VerticalPanel {
 
 	//private VerticalPanel vpSub = new VerticalPanel();
 
-	Button subBtn = new Button("Abonnement suchen");
+	Button subBtn = new Button("Abonnement hinzufügen");
 
 	public void onLoad() {
 		super.onLoad();
