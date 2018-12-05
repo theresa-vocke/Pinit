@@ -37,6 +37,7 @@ public class Pinit implements EntryPoint {
 	private Button logout = new Button("Logout");
 	private Button loginButton = new Button("Login");
 	private Button subbtn = new Button("Neues Abonnement");
+	private Button myPinboardBtn = new Button ("Meine Pinnwand");
 	private VerticalPanel subPanel = new VerticalPanel();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
@@ -203,7 +204,7 @@ public class Pinit implements EntryPoint {
 		});
 		RootPanel.get("details").clear();
 		
-		RootPanel.get("details").add(logout);
+		RootPanel.get("header").add(logout);
 		
 		RootPanel.get("subscription").clear();
 		RootPanel.get("subscription").add(subPanel);
@@ -212,9 +213,11 @@ public class Pinit implements EntryPoint {
 		
 		
 		subPanel.add(subbtn);
-		subbtn.setWidth("150px");
-		//subbtn.setHeight("40px");
+		subPanel.add(myPinboardBtn);
+		subbtn.setWidth("160px");
+		myPinboardBtn.setWidth("160px");
 		subbtn.setStylePrimaryName("subscription-button");
+		myPinboardBtn.setStylePrimaryName("mypinboard-button");
 		logout.addClickHandler(new ClickHandler() {
 
 			@Override

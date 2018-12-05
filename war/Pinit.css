@@ -43,21 +43,6 @@ body {
 	margin-right: 4%;
 }
 
-#subscription {
-	height: 40px;
-	width: 15%;
-	margin-left: 5%;
-	margin-bottom: 1%;
-	background:#ffffff;
-	box-shadow: 5px 5px 2.5px #840000;
-	background-size: contain;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border: 1px outset #840000;
-	overflow: auto;
-	
-}
 
 
 .login-button {
@@ -88,19 +73,49 @@ body {
  right: 60px;
 }
 
+#subscription {
+	height: 80px;
+	width: 15%;
+	margin-left: 5%;
+	margin-bottom: 1%;
+	background:#c40000;
+	box-shadow: 5px 5px 2.5px #840000;
+	background-size: contain;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px outset #840000;
+	overflow: auto;
+	
+}
+
 .subscription-button {
  font-family: Arial;
- color: #e10000;
+ color: #ffffff;
+ background-color: #c40000;
+ border: none;
  font-size: 15px;
  height: 40px;
  width: 15%;
- margin-left: 5%;
 
  position: left;
  top: 40px;
  right: 160px;
 }
 
+.mypinboard-button {
+ font-family: Arial;
+ color: #ffffff;
+ background-color: #c40000;
+ border: none;
+ font-size: 15px;
+ height: 40px;
+ width: 15%;
+
+ position: left;
+ top: 40px;
+ right: 160px;
+}
 
 
  {
