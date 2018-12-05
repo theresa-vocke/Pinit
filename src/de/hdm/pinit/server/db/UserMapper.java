@@ -155,9 +155,8 @@ public class UserMapper {
 	/**
 	 * Auslesen aller User-Objekte mit gegebenem Nicknamen
 	 */
-	public Vector<User> findByNickname(String nickname) {
+	public User findByNickname(String nickname) {
 		Connection con = DBConnection.connection();
-		Vector<User> result = new Vector<User>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -178,16 +177,15 @@ public class UserMapper {
 				u.setSurname(rs.getString("surname"));
 				u.setNickname(rs.getString("nickname"));
 				u.setCreateDate(rs.getTimestamp("createdate"));
-
-				// Hinzufügen des neuen Objekts zum Ergebnisvektor
-				result.addElement(u);
+				
+				return u;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		// Ergebnisvektor zurückgeben
-		return result;
+		return null;
 	}
 	
 	

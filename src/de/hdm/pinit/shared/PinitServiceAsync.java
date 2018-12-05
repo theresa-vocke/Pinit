@@ -1,6 +1,5 @@
 package de.hdm.pinit.shared;
 
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,6 +36,10 @@ public interface PinitServiceAsync {
 	void getPinboardBySubscription(Subscription s, AsyncCallback<Pinboard> callback);
 
 	void getAllSubscriptionsByUser(int userId, AsyncCallback<Vector<User>> callback);
+
+	void deleteSubscription(int userId, String nickname, AsyncCallback<Void> callback);
+
+	void getUserByNickname(String nickname, AsyncCallback<User> callback);
 	
 
 }

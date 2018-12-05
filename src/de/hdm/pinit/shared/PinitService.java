@@ -58,7 +58,11 @@ public interface PinitService extends RemoteService {
 
 	public Vector<User> getAllSubscriptionsByUser(int userId) throws IllegalArgumentException;
 
-	Pinboard getPinboardByOwner(int userId);
+	public Pinboard getPinboardByOwner(int userId);
+	
+	public void deleteSubscription(int userId, String nickname) throws IllegalArgumentException;
+
+	public User getUserByNickname(String nickname) throws IllegalArgumentException;
 
 	
 }

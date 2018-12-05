@@ -1,65 +1,78 @@
 package de.hdm.pinit.client.gui;
 
-import java.util.Vector;
-
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.pinit.shared.PinitServiceAsync;
-import de.hdm.pinit.shared.bo.Pinboard;
 import de.hdm.pinit.shared.bo.User;
 
 public class SubscriptionForm extends VerticalPanel {
 
+	
+	//Label test = new Label();
+	String nickname = null;
+	//HorizontalPanel eins = new HorizontalPanel();
 	PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
-
-	Pinboard pinboardToDisplay = null;
-
-	Label nicknameLabel = new Label("Pinnwand von:");
-	Button removeBtn = new Button("Abonnement aufheben");
-
-	public void onLoad() {
-		super.onLoad();
-		this.add(nicknameLabel);
-		this.add(removeBtn);
-	}
-
-	void setSelected(User u) {
+	Button removeBtn = new Button("Nutzer deabonnieren");
+	
+	public SubscriptionForm(int userId) {
+		// TODO Auto-generated constructor stub
+		pinitService.getUserById(userId, new AsyncCallback<User>() {
+			
+			@Override
+			public void onSuccess(User result) {
+				// TODO Auto-generated method stub
+				Window.alert("Jetzt siehst du die Pinnwand");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Fehler");
+			}
+		});
 		
-			if(u != null) {
+		removeBtn.addClickHandler(new RemoveClickHandler());
+		removeBtn.setStylePrimaryName("remove-button");
+		//eins.add(test);
+		//this.add(removeBtn);
+		RootPanel.get("details").clear();
+		RootPanel.get("details").add(removeBtn);
+		//this.add(eins);
+	}
+	
+	public class RemoveClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			pinitService.deleteSubscription(Integer.parseInt(Cookies.getCookie("id")), nickname, new DeaboniereAsyncCallback());
 			
-			
-			removeBtn.setEnabled(true);
-			nicknameLabel.setText(pinboardToDisplay.getUser().getNickname());	
-			
-		}else {
-			removeBtn.setEnabled(false);
-			nicknameLabel.setText("");
 		}
 	}
+	
+	public class DeaboniereAsyncCallback implements AsyncCallback<Void>{
 
-	public class SubPinboardCallback implements AsyncCallback<Pinboard> {
-
-		// Bei einem Fehlschlag, tritt die Methode ein, die Informationen darüber gibt
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Die Pinnwand konnte nicht geladen werden!");
-
+			// TODO Auto-generated method stub
+			Window.alert("User wurde nicht deabonniert!");
 		}
 
-		/*
-		 * Wird das CallbackObjekt ordnungsgemäß zurückgegeben, so wird die
-		 * Methode(non-Javadoc) aufgerufen, die die folgenden Aktionen ausführt.
-		 */
 		@Override
-		public void onSuccess(Pinboard result) {
-
-			// Test
-			Window.alert("Die Pinnwand konnte erfolgreich geladen werden!");
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			Window.alert("User wurde deabonniert!");
+			RootPanel.get("details").clear();
+			RootPanel.get("navigator").clear();
+			RootPanel.get("navigator").add(new PinboardCellList());
+			
 		}
+		
 	}
 }

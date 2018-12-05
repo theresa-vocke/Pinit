@@ -23,7 +23,7 @@ public class PinboardCellList extends VerticalPanel {
 	PinboardCell cell = new PinboardCell();
 	
 	// Leeres Abonnement-Formular, dieses später bei Auswahl einer Aktion geöffnet wird
-	SubscriptionForm subscriptionForm = new SubscriptionForm();
+	//SubscriptionForm subscriptionForm = new SubscriptionForm();
 
 	// Zugriff auf unsere Async-Methoden über unser Proxy
 	PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
@@ -113,7 +113,7 @@ public class PinboardCellList extends VerticalPanel {
 			if (selectedUser != null) {
 								
 				RootPanel.get("details").clear();
-				RootPanel.get("details").add(subscriptionForm);
+				RootPanel.get("details").add(new SubscriptionForm (selectedUser.getId()));
 			}
 			
 				

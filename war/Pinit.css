@@ -118,6 +118,19 @@ body {
 }
 
 
+.remove-button{
+ font-family: Arial;
+ color: #ffffff;
+ background-color: #c40000;
+ border: none;
+ font-size: 15px;
+ height: 40px;
+ width: 15%;
+ position: absolute;
+
+
+}
+
  {
 	padding-left: -10%;
 	height: 90px;

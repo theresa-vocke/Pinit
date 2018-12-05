@@ -148,7 +148,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 
 	@Override
-	public User checkUser(String email) {
+	public User checkUser(String email) throws IllegalArgumentException {
 		/*
 		 * Leerer Vektor, welchem alle in der DB gespeicherten Nutzer zugewiesen
 		 * werden.
@@ -179,7 +179,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * deren Pinnwände) er abonniert hat.
 	 */
 	@Override
-	public Vector<User> getAllSubscriptionsByUser(int id) {
+	public Vector<User> getAllSubscriptionsByUser(int id) throws IllegalArgumentException {
 		/*
 		 * leerer Vektor wird angelegt, in welchen dann alle abonnierten User
 		 * gespeichert werden.
@@ -232,10 +232,15 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * Der Eigentümer einer Pinnwand wird ausgelesen.
 	 */
 	@Override
-	public User getOwnerByPinboard(Pinboard p) {
+	public User getOwnerByPinboard(Pinboard p) throws IllegalArgumentException {
 		User u = new User();
 		u = this.getUserById(p.getOwnerId());
 		return u;
+	}
+	
+	@Override
+	public User getUserByNickname(String nickname) throws IllegalArgumentException{
+		return this.uMapper.findByNickname(nickname);
 	}
 
 	/*
@@ -280,7 +285,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * Eine Pinnwand wird anhand eines übergebenen Abo-Objektes ausgelesen.
 	 */
 	@Override
-	public Pinboard getPinboardBySubscription(Subscription s) {
+	public Pinboard getPinboardBySubscription(Subscription s) throws IllegalArgumentException {
 		init();
 		/*
 		 * Über das übergebene Abo-Objekt wird auf die Pinnwand-ID zugegriffen
@@ -333,6 +338,19 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		return this.sMapper.findByUserId(userId);
 	}
 
+	@Override
+	public void deleteSubscription(int userId, String nickname) throws IllegalArgumentException {
+		User u = getUserByNickname(nickname);
+		Pinboard p = getPinboardByOwner(u.getId());
+		Subscription s = new Subscription(); 
+		s.setUserId(userId);
+		s.setPinboardId(p.getId());
+		s.setId(1);
+		this.sMapper.delete(s);
+		
+		return;
+	}
+	
 	/*
 	 * ________________________________________________________________________
 	 * ABSCHNITT Ende - Methoden für Subscription-Objekte
