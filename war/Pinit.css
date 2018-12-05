@@ -88,6 +88,18 @@ body {
  right: 60px;
 }
 
+.subscription-button {
+ font-family: Arial;
+ color: #e10000;
+ font-size: 15px;
+ height: 40px;
+ width: 15%;
+ margin-left: 5%;
+
+ position: left;
+ top: 40px;
+ right: 160px;
+}
 
 
 

@@ -199,7 +199,7 @@ public class UserMapper {
 
 			ResultSet rs = stmt.executeQuery("SELECT id, email, prename, surname, nickname, createdate " 
 					+ "FROM user "
-					+ "WHERE id LIKE '" + id + "' ORDER BY id");
+					+ "WHERE id=" + id + " ORDER BY nickname");
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. 

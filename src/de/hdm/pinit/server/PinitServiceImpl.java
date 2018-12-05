@@ -126,7 +126,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 	@Override
 	public User getUserById(int id) throws IllegalArgumentException {
-
+		
 		return this.uMapper.findById(id);
 	}
 
@@ -179,8 +179,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * deren Pinnwände) er abonniert hat.
 	 */
 	@Override
-	public Vector<User> getAllSubscriptionsByUser(int userId) {
-
+	public Vector<User> getAllSubscriptionsByUser(int id) {
 		/*
 		 * leerer Vektor wird angelegt, in welchen dann alle abonnierten User
 		 * gespeichert werden.
@@ -195,7 +194,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		 * Vektor wird angelegt, in welchen alle einzelnen Abos des Users direkt
 		 * gespeichert werden. Anhand eines Nutzers mit übergebener userID.
 		 */
-		Vector<Subscription> s = this.getSubscriptionByUser(userId);
+		Vector<Subscription> s = this.getSubscriptionByUser(id);
 
 		/*
 		 * Zu jedem einzeln gespeicherte Abo im Subscription Vektor wird die
@@ -273,7 +272,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 	@Override
 	public Pinboard getPinboardByOwner(int userId) throws IllegalArgumentException {
-					
+		init();
 		return this.pMapper.findByOwner(userId);
 	}
 
@@ -282,7 +281,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 	@Override
 	public Pinboard getPinboardBySubscription(Subscription s) {
-
+		init();
 		/*
 		 * Über das übergebene Abo-Objekt wird auf die Pinnwand-ID zugegriffen
 		 * und darüber wird ein tatsächlichen Pinnwand-Objekt in der DB gesucht.
@@ -330,7 +329,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 */
 	@Override
 	public Vector<Subscription> getSubscriptionByUser(int userId) throws IllegalArgumentException {
-
+	
 		return this.sMapper.findByUserId(userId);
 	}
 

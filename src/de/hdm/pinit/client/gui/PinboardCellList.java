@@ -102,7 +102,7 @@ public class PinboardCellList extends VerticalPanel {
 			 *folgende Aktion ausgelöst. Dies wird in einer anonymen Klasse definiert, worin 
 			 *nun die Methode deklariert wird. 
 			 */
-			@Override
+			
 			public void onSelectionChange(SelectionChangeEvent event) {
 				
 				/*Der ausgewählte User wird über das selectionModel geholt und der Variable 
