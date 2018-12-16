@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Vector;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hdm.pinit.server.db.PinboardMapper;
+import de.hdm.pinit.server.db.PostingMapper;
 import de.hdm.pinit.server.db.SubscriptionMapper;
 import de.hdm.pinit.server.db.UserMapper;
 import de.hdm.pinit.shared.PinitService;
@@ -372,13 +373,12 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * Speicherung bzw. Ablage in der Datenbank.
 	 */
 	@Override
-	public Posting createPosting(int ownerId, String text) {
+	public Posting createPosting(int pinboardId, String text) {
 
 		Posting p = new Posting();
 
-		p.setOwnerId(ownerId);
+		p.setPinboardId(pinboardId);
 		p.setText(text);
-		p.setPinboard(pinboardId);
 		p.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
 		p.setId(1);

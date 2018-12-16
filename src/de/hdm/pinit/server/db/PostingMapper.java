@@ -24,7 +24,7 @@ private static PostingMapper postingMapper = null;
 		return postingMapper;
 	}
 	
-	protected Posting findPostingById(int id) {
+	public Posting findPostingById(int id) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -58,7 +58,7 @@ private static PostingMapper postingMapper = null;
 		return null;
 	}
 	
-	protected Vector <Posting> findPostingsByPinboard(int pinboardId){
+	public Vector <Posting> findPostingsByPinboard(int pinboardId){
 		
 		Connection con = DBConnection.connection();
 		Vector <Posting> pos = new Vector <Posting>();
@@ -125,7 +125,7 @@ private static PostingMapper postingMapper = null;
 	/**
 	 * 
 	 */
-	protected void delete(Posting p) {
+	public void delete(Posting p) {
 		Connection con = DBConnection.connection();
 
 		try {

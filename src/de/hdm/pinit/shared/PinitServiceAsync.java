@@ -47,6 +47,8 @@ public interface PinitServiceAsync {
 	void getPostingsByPinboardOwner(int ownerId, AsyncCallback<Vector<Posting>> callback);
 
 	void deletePosting(Posting p, AsyncCallback<Void> callback);
+
+	void createPosting(int ownerId, String text, AsyncCallback<Posting> callback);
 	
 
 }
