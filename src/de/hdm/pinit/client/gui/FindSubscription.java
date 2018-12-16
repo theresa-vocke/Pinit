@@ -22,26 +22,30 @@ public class FindSubscription extends DialogBox {
 
 	MultiWordSuggestOracle selection = new MultiWordSuggestOracle();
 
-	User u = new User();
-
 	PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
+
+	User u = new User();
 
 	Button subscribeBtn = new Button("Abonnieren");
 	Button cancelBtn = new Button("Abbrechen");
 
-	// Label lbNickname = new Label("Nickname: ");
-	// TextBox txtNickname = new TextBox();
-
+	// Eingabefeld, für das zu suchende Exemplar
 	SuggestBox aboBox = new SuggestBox(selection);
-
+	
+	//Öffentlicher Konstruktor 
 	public FindSubscription(){		
 		  
 		VerticalPanel aboPanel = new VerticalPanel();
-		this.setText("Wählen Sie Nutzer aus, die Sie abonnieren möchten.");
+		this.setText("Suchen Sie nach PinIt-Boards von anderen Nutzern");
 		this.setAnimationEnabled(false);
 		this.setGlassEnabled(true);
+		this.setStylePrimaryName("aboborderbox");
 		this.center();
 		pinitService.getAllUser(new AllUserAsyncCallback());
+		
+		aboBox.setStylePrimaryName("abobox");
+		subscribeBtn.setStylePrimaryName("subscribebtn-button");
+		cancelBtn.setStylePrimaryName("cancelbtn-button");
 		
 		aboPanel.add(aboBox);
 		aboPanel.add(subscribeBtn);

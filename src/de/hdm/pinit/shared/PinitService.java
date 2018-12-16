@@ -73,7 +73,9 @@ public interface PinitService extends RemoteService {
 
 	public Posting createPosting(int pinboardId, String text);
 
-	Boolean checkSubscription(int userId, String nickname);
+	public Boolean checkSubscription(int userId, String nickname);
+
+	public Posting createPostingForPinboard(int userId, String text) throws IllegalArgumentException;
 
 	
 }

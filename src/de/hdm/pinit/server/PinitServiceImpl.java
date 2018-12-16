@@ -287,6 +287,15 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		init();
 		return this.pMapper.findByOwner(userId);
 	}
+	
+	@Override
+	public Posting createPostingForPinboard(int userId, String text) throws IllegalArgumentException {
+		
+		Pinboard p = this.getPinboardByOwner(userId);
+		Posting po = this.createPosting(p.getId(), text);
+		
+		return po;
+	}
 
 	/**
 	 * Eine Pinnwand wird anhand eines übergebenen Abo-Objektes ausgelesen.
@@ -400,6 +409,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		p.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
 		p.setId(1);
+		
 
 		return poMapper.insert(p);
 	}
