@@ -51,6 +51,8 @@ public interface PinitServiceAsync {
 	void createPosting(int postingId, String text, AsyncCallback<Posting> callback);
 
 	void checkSubscription(int userId, String nickname, AsyncCallback<Boolean> callback);
+
+	void createPostingForPinboard(int userId, String text, AsyncCallback<Posting> callback);
 	
 
 }

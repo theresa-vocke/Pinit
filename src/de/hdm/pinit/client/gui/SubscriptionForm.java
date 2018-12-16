@@ -117,12 +117,12 @@ public class SubscriptionForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			pinitService.deleteSubscription(Integer.parseInt(Cookies.getCookie("id")), nickname,
-					new DeaboniereAsyncCallback());
+					new RemoveAsyncCallback());
 
 		}
 	}
 
-	public class DeaboniereAsyncCallback implements AsyncCallback<Void> {
+	public class RemoveAsyncCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {

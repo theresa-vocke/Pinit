@@ -143,36 +143,28 @@ body {
  height: 40px;
  width: 15%;
  position: absolute;
-
-
 }
 
- {
-	padding-left: -10%;
-	height: 90px;
-	width: 89.5%;
-	margin-top: 20px;
-	margin-left: 5%;
-	margin-bottom: 10px;
-
-	background:#fdf4e3 ;
-	box-shadow: 5px 5px 2.5px #840000;
-	background-size: contain;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.abobox {
+border-color: #c40000;
+border-radius: 3px;
+}
+.aboborderbox {
+border-color: #c40000;
+border-radius: 3px;
+}
+.subscribebtn-button {
+ font-family:Arial;
+ color: #ffffff;
+ background-color:#c40000;
+ border: none;
 }
 
- {
-
-	background-position: left;
-	height: 230%;
-	width: 80%;
-	background-size: 80%;	
-	background-repeat: no-repeat;
-	margin-left: 5%;
-	text-shadow: 1px 1px #ffffff;
-	letter-spacing: 0.8em;
+.cancelbtn-button {
+ font-family: Arial;
+ color: #ffffff;
+ background-color:#c40000;
+ border: none;
 }
 
 #logo {
