@@ -23,20 +23,7 @@ public class SubscriptionForm extends VerticalPanel {
 	
 	public SubscriptionForm(int userId) {
 		// TODO Auto-generated constructor stub
-		pinitService.getUserById(userId, new AsyncCallback<User>() {
-			
-			@Override
-			public void onSuccess(User result) {
-				// TODO Auto-generated method stub
-				Window.alert("Jetzt siehst du die Pinnwand");
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				Window.alert("Fehler");
-			}
-		});
+		pinitService.getUserById(userId, new LoadPinboardCallback());
 		
 		removeBtn.addClickHandler(new RemoveClickHandler());
 		removeBtn.setStylePrimaryName("remove-button");
@@ -45,6 +32,24 @@ public class SubscriptionForm extends VerticalPanel {
 		RootPanel.get("details").clear();
 		RootPanel.get("details").add(removeBtn);
 		//this.add(eins);
+	}
+	
+	public class LoadPinboardCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onSuccess(User result) {
+			// TODO Auto-generated method stub
+			Window.alert("Jetzt siehst du die Pinnwand");
+			//hier noch rein, dass auch die Beiträge von dem jeweiligen User geladen werden
+			
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Fehler");
+		}
+		
 	}
 	
 	public class RemoveClickHandler implements ClickHandler{
@@ -75,4 +80,5 @@ public class SubscriptionForm extends VerticalPanel {
 		}
 		
 	}
+
 }
