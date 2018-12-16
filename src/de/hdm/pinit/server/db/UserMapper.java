@@ -163,13 +163,13 @@ public class UserMapper {
 
 			ResultSet rs = stmt.executeQuery("SELECT id, email, prename, surname, nickname, createdate " 
 					+ "FROM user "
-					+ "WHERE nickname LIKE '" + nickname + "' ORDER BY nickname");
+					+ "WHERE nickname='" + nickname + "'" );
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. 
 			 * Diese Ergebnisse werden in ein UserObjekt mit den Setter-Methoden rein gepackt. 
 			 */
-			while (rs.next()) {
+			if (rs.next()) {
 				User u = new User();
 				u.setId(rs.getInt("id"));
 				u.setEmail(rs.getString("email"));

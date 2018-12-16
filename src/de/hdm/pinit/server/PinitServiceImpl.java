@@ -248,6 +248,8 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 		return this.uMapper.findByNickname(nickname);
 	}
 
+	
+	
 	/*
 	 * ________________________________________________________________________
 	 * ABSCHNITT Ende - Methoden für User-Objekte
@@ -319,13 +321,15 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	 * Nutzers, die abonniert wird.
 	 */
 	@Override
-	public Subscription createSubscription(int userId, int pinboardId) throws IllegalArgumentException {
+	public Subscription createSubscription(int userId, String nickname) throws IllegalArgumentException {
 
+		User u = this.getUserByNickname(nickname);
+		Pinboard p = this.getPinboardByOwner(u.getId());
+		
 		Subscription s = new Subscription();
 
 		s.setUserId(userId);
-		s.setPinboardId(pinboardId);
-		// s.setCreateDate(new Timestamp(System.currentTimeMillis()));
+		s.setPinboardId(p.getId());
 
 		s.setId(1);
 
@@ -345,15 +349,29 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 	@Override
 	public void deleteSubscription(int userId, String nickname) throws IllegalArgumentException {
-		User u = getUserByNickname(nickname);
-		Pinboard p = getPinboardByOwner(u.getId());
+		User u = this.getUserByNickname(nickname);
+		Pinboard p = this.getPinboardByOwner(u.getId());
 		Subscription s = new Subscription();
 		s.setUserId(userId);
 		s.setPinboardId(p.getId());
 		s.setId(1);
+		
 		this.sMapper.delete(s);
-
+		
 		return;
+
+	}
+	
+	@Override
+	public Boolean checkSubscription(int userId, String nickname) {
+		Vector<User> u = this.getAllSubscriptionsByUser(userId);
+		
+		for (User user : u) {
+			if (user.getNickname().equals(nickname)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*

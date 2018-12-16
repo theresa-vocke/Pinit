@@ -24,7 +24,7 @@ public interface PinitServiceAsync {
 
 	void getPinboardByOwner(int userId, AsyncCallback<Pinboard> callback);
 
-	void createSubscription(int userId, int pinboardId, AsyncCallback<Subscription> callback);
+	void createSubscription(int userId, String nickname, AsyncCallback<Subscription> callback);
 
 	void getSubscriptionByUser(int userId, AsyncCallback<Vector<Subscription>> callback);
 
@@ -49,6 +49,8 @@ public interface PinitServiceAsync {
 	void deletePosting(Posting p, AsyncCallback<Void> callback);
 
 	void createPosting(int postingId, String text, AsyncCallback<Posting> callback);
+
+	void checkSubscription(int userId, String nickname, AsyncCallback<Boolean> callback);
 	
 
 }

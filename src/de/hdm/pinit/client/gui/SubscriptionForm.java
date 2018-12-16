@@ -57,6 +57,7 @@ public class SubscriptionForm extends VerticalPanel {
 		@Override
 		public void onSuccess(User result) {
 			pinitService.getPostingsByPinboardOwner(result.getId(), new PostingCallback());
+			nickname = result.getNickname();
 		}
 
 		@Override

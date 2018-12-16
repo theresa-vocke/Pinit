@@ -111,13 +111,12 @@ public class SubscriptionMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM subscription " + "WHERE id=" + s.getId() 
-					+ "AND userid=" + s.getUserId()
-					+ "AND pinboardid=" + s.getPinboardId()
-					);
+			stmt.executeUpdate("DELETE FROM `subscription` WHERE `subscription`.`userid` = "+s.getUserId()+" AND `subscription`.`pinboardid` = "+s.getPinboardId());
+					
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return;
 	}
 
 	/**
