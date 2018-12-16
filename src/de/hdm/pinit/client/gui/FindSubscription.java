@@ -39,7 +39,7 @@ public class FindSubscription extends DialogBox {
 		this.setText("Suchen Sie nach PinIt-Boards von anderen Nutzern");
 		this.setAnimationEnabled(false);
 		this.setGlassEnabled(true);
-		this.setStylePrimaryName("aboborderbox");
+		//this.setStylePrimaryName("aboborderbox");
 		this.center();
 		pinitService.getAllUser(new AllUserAsyncCallback());
 		
