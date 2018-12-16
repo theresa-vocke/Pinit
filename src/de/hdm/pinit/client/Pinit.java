@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.pinit.client.gui.ClientSideSettings;
+import de.hdm.pinit.client.gui.FindSubscription;
 import de.hdm.pinit.client.gui.PinboardCellList;
 import de.hdm.pinit.client.gui.PinboardForm;
 import de.hdm.pinit.shared.LoginServiceAsync;
@@ -219,10 +220,8 @@ public class Pinit implements EntryPoint {
 			// ClickEvent welcher ausgelöst wird sobald der "NeuesAbo-Button" ausgewählt
 			// wird
 			@Override
-			public void onClick(ClickEvent arg0) {
-				// TODO Auto-generated method stub
-				// AboSuchenForm
-
+			public void onClick(ClickEvent event) {
+				new FindSubscription().show();
 			}
 
 		});
