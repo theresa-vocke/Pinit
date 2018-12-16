@@ -86,9 +86,11 @@ public class SubscriptionMapper {
 				 * SubscriptionObjekt die Werte, die auf die Tabelle abgebildet
 				 * werden sollen.
 				 */
-				stmt.executeUpdate("INSERT INTO subscription (nutzerid, pinboardid) " + "VALUES (" + s.getUserId()
-						+ "','" + s.getPinboardId() + "')");
+				stmt.executeUpdate("INSERT INTO subscription (id, userid, pinboardid)" 
+				 + "VALUES ("+ s.getId() +"," + s.getUserId() + ",'"
+						+ s.getPinboardId() +"')");
 			}
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

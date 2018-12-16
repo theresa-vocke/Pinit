@@ -74,6 +74,7 @@ public class FindSubscription extends DialogBox {
 
 			pinitService.checkSubscription(Integer.parseInt(Cookies.getCookie("id")), aboBox.getValue(),
 					new CheckAsyncCallback());
+			hide();
 		}
 
 	}
@@ -90,6 +91,7 @@ public class FindSubscription extends DialogBox {
 			if (result == true) {
 				pinitService.createSubscription(Integer.parseInt(Cookies.getCookie("id")), aboBox.getValue(),
 						new AbonnementAsyncCallback());
+				hide();
 			} else {
 				Window.alert("Dieser Nutzer wurde schon abonniert.");
 			}
@@ -130,7 +132,8 @@ public class FindSubscription extends DialogBox {
 			Window.alert("Abonnement wurde angelegt!");
 			RootPanel.get("Navigator").clear();
 			RootPanel.get("Navigator").add(new PinboardCellList());
-			hide();
+			//hide();
+			FindSubscription.this.hide();
 
 		}
 
