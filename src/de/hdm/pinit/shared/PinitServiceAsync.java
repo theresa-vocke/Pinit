@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.pinit.shared.bo.Pinboard;
+import de.hdm.pinit.shared.bo.Posting;
 import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
 
@@ -40,6 +41,12 @@ public interface PinitServiceAsync {
 	void deleteSubscription(int userId, String nickname, AsyncCallback<Void> callback);
 
 	void getUserByNickname(String nickname, AsyncCallback<User> callback);
+
+	void getPostingsByPinboard(int id, AsyncCallback<Vector<Posting>> callback);
+
+	void getPostingsByPinboardOwner(int ownerId, AsyncCallback<Vector<Posting>> callback);
+
+	void deletePosting(Posting p, AsyncCallback<Void> callback);
 	
 
 }

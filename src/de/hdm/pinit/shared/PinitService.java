@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import java.util.Vector;
 import de.hdm.pinit.shared.bo.Pinboard;
+import de.hdm.pinit.shared.bo.Posting;
 import de.hdm.pinit.shared.bo.Subscription;
 import de.hdm.pinit.shared.bo.User;
 
@@ -63,6 +64,12 @@ public interface PinitService extends RemoteService {
 	public void deleteSubscription(int userId, String nickname) throws IllegalArgumentException;
 
 	public User getUserByNickname(String nickname) throws IllegalArgumentException;
+
+	public Vector<Posting> getPostingsByPinboard(int id);
+
+	public Vector<Posting> getPostingsByPinboardOwner(int ownerId);
+
+	public void deletePosting(Posting p);
 
 	
 }
