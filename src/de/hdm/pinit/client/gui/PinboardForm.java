@@ -84,7 +84,6 @@ public class PinboardForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// etwas cooles
 
 		}
 	}

@@ -58,14 +58,14 @@ private static PostingMapper postingMapper = null;
 		return null;
 	}
 	
-	public Vector <Posting> findPostingsByPinboard(int pinboardId){
+	public Vector<Posting> findPostingsByPinboard(int pinboardId){
 		
 		Connection con = DBConnection.connection();
-		Vector <Posting> pos = new Vector <Posting>();
+		Vector<Posting> pos = new Vector<Posting>();
 			try{
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT id, createdate, pinboardid, text"
-						+ " FROM posting " + "WHERE pinboardid=" + pinboardId);
+						+ " FROM posting " + "WHERE pinboardid= " + pinboardId);
 				
 				
 				while(rs.next()){

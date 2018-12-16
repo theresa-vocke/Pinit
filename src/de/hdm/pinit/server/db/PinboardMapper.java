@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.hdm.pinit.shared.bo.Pinboard;
-import de.hdm.pinit.shared.bo.User;
 import de.hdm.pinit.server.db.DBConnection;
 
 /**
@@ -139,7 +138,7 @@ public class PinboardMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT id, createdate, ownerid FROM pinboard "
-					+ "WHERE ownerid " + userId);
+					+ "WHERE ownerid=" + userId);
 
 			/*
 			 * Für jeden Eintrag in der Ergebnistabelle wird ein Objekt abgebildet. Diese

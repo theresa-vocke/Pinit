@@ -59,6 +59,22 @@ body {
  right: 60px;
 }
 
+.posting-content{
+	font-family: monospace;
+	font-size: 15px;
+	font-weight: inherit;
+	border-radius: 3px;
+	margin-top: 6%;
+ 	margin-left: 3%;
+}
+
+.posting-grid{
+	background-color: #ffffff;
+	border: solid #ff0000;
+	width: 550px;
+
+}
+
 .logout-button {
  font-family: Arial;
  color: #000000;

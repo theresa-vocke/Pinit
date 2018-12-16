@@ -6,79 +6,137 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import java.util.Vector;
 
 import de.hdm.pinit.shared.PinitServiceAsync;
+import de.hdm.pinit.shared.bo.Posting;
 import de.hdm.pinit.shared.bo.User;
 
 public class SubscriptionForm extends VerticalPanel {
 
-	
-	//Label test = new Label();
 	String nickname = null;
-	//HorizontalPanel eins = new HorizontalPanel();
+	int currentUser = 0;
 	PinitServiceAsync pinitService = ClientSideSettings.getPinitService();
 	Button removeBtn = new Button("Nutzer deabonnieren");
+
+	VerticalPanel postingContent = new VerticalPanel();
 	
-	public SubscriptionForm(int userId) {
-		// TODO Auto-generated constructor stub
+	final FlexTable postingTable = new FlexTable();
+
+	ScrollPanel postingScroll = new ScrollPanel();
+	
+	VerticalPanel textPanel = null;
+	
+	Label textContent = null;
+	Label createdate = null;
+
+	public SubscriptionForm(final int userId) {
+
+		this.currentUser = userId;
+		postingScroll.setSize("900px", "550px");
 		pinitService.getUserById(userId, new LoadPinboardCallback());
-		
+
 		removeBtn.addClickHandler(new RemoveClickHandler());
 		removeBtn.setStylePrimaryName("remove-button");
-		//eins.add(test);
-		//this.add(removeBtn);
-		RootPanel.get("details").clear();
-		RootPanel.get("details").add(removeBtn);
-		//this.add(eins);
+				
+		postingScroll.add(postingTable);
+		
+		this.add(postingScroll);
+		this.add(removeBtn);
+
 	}
-	
+
 	public class LoadPinboardCallback implements AsyncCallback<User> {
 
 		@Override
 		public void onSuccess(User result) {
-			// TODO Auto-generated method stub
-			Window.alert("Jetzt siehst du die Pinnwand");
-			//hier noch rein, dass auch die Beiträge von dem jeweiligen User geladen werden
-			
+			pinitService.getPostingsByPinboardOwner(result.getId(), new PostingCallback());
 		}
-		
+
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
+
 			Window.alert("Fehler");
 		}
-		
+
 	}
-	
-	public class RemoveClickHandler implements ClickHandler{
+
+	public class PostingCallback implements AsyncCallback<Vector<Posting>> {
+
+		@Override
+		public void onFailure(Throwable arg0) {
+			Window.alert("Das war wohl nix.");
+
+		}
+
+		@Override
+		public void onSuccess(Vector<Posting> result) {
+			if (result.size() != 0) {
+				for (Posting posting : result) {
+
+					textPanel = new VerticalPanel();
+					
+					int rows = postingTable.getRowCount();
+					
+					textContent = new Label();
+					createdate = new Label();
+
+					createdate.setText(posting.getCreatedate().toString());
+
+					final Grid postingGrid = new Grid(2, 2);
+					textContent.setStylePrimaryName("posting-content");
+					textContent.setText(posting.getText());
+
+					postingGrid.setWidget(0, 0, textContent);
+					postingGrid.setWidget(1, 0, createdate);
+
+					postingGrid.setStylePrimaryName("posting-grid");
+					
+					
+					postingTable.setWidget(rows, 0, textPanel);
+					
+					textPanel.add(postingGrid);
+
+				}
+			} else {
+				Window.alert("Momentan noch keine Beiträge vorhanden!");
+			}
+		}
+
+	}
+
+	public class RemoveClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			pinitService.deleteSubscription(Integer.parseInt(Cookies.getCookie("id")), nickname, new DeaboniereAsyncCallback());
-			
+			pinitService.deleteSubscription(Integer.parseInt(Cookies.getCookie("id")), nickname,
+					new DeaboniereAsyncCallback());
+
 		}
 	}
-	
-	public class DeaboniereAsyncCallback implements AsyncCallback<Void>{
+
+	public class DeaboniereAsyncCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
 			Window.alert("User wurde nicht deabonniert!");
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-			// TODO Auto-generated method stub
 			Window.alert("User wurde deabonniert!");
 			RootPanel.get("details").clear();
 			RootPanel.get("navigator").clear();
 			RootPanel.get("navigator").add(new PinboardCellList());
-			
+
 		}
-		
+
 	}
 
 }

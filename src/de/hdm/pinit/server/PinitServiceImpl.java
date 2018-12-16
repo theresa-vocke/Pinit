@@ -402,8 +402,8 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	@Override
 	public Vector<Posting> getPostingsByPinboardOwner(int ownerId) {
 
-		Pinboard p = getPinboardByOwner(ownerId);
-		Vector<Posting> po = getPostingsByPinboard(p.getId());
+		Pinboard p = this.getPinboardByOwner(ownerId);
+		Vector<Posting> po = this.getPostingsByPinboard(p.getId());
 		return po;
 	}
 
