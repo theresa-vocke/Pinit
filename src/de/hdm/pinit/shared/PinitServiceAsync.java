@@ -48,7 +48,7 @@ public interface PinitServiceAsync {
 
 	void deletePosting(Posting p, AsyncCallback<Void> callback);
 
-	void createPosting(int ownerId, String text, AsyncCallback<Posting> callback);
+	void createPosting(int postingId, String text, AsyncCallback<Posting> callback);
 	
 
 }

@@ -71,7 +71,7 @@ public interface PinitService extends RemoteService {
 
 	public void deletePosting(Posting p);
 
-	public Posting createPosting(int ownerId, String text);
+	public Posting createPosting(int pinboardId, String text);
 
 	
 }
