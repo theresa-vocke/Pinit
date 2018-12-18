@@ -112,7 +112,7 @@ private static PostingMapper postingMapper = null;
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
 				stmt.executeUpdate("INSERT INTO posting (id, createdate, pinboardid, text) " + "VALUES (" + p.getId() + ",'"
-						+ p.getCreatedate() + "','" + p.getPinboardId() + "','" + p.getText() + "')");
+						+ p.getCreateDate() + "','" + p.getPinboardId() + "','" + p.getText() + "')");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

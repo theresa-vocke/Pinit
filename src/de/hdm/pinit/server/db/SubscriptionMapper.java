@@ -63,7 +63,7 @@ public class SubscriptionMapper {
 			 * vorhanden, ein einzeiliges Ergebnis zurück. Hier überprüfen wir,
 			 * was der momentan höchste Primärschlüsselwert ist.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM subscription ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM subscription");
 
 			/*
 			 * Next ist wie ein Iterator, setzt immer auf das aktuelle Element
@@ -86,9 +86,8 @@ public class SubscriptionMapper {
 				 * SubscriptionObjekt die Werte, die auf die Tabelle abgebildet
 				 * werden sollen.
 				 */
-				stmt.executeUpdate("INSERT INTO subscription (id, userid, pinboardid)" 
-				 + "VALUES ("+ s.getId() +"," + s.getUserId() + ",'"
-						+ s.getPinboardId() +"')");
+				stmt.executeUpdate("INSERT INTO subscription (id, createdate, userid, pinboardid) " + "VALUES ("
+				 + s.getId() + ",'" + s.getCreateDate() + "','" + s.getUserId() + "','"	+ s.getPinboardId() +"')");
 			}
 
 

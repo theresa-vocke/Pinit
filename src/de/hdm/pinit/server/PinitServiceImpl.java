@@ -292,9 +292,16 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 	public Posting createPostingForPinboard(int userId, String text) throws IllegalArgumentException {
 		
 		Pinboard p = this.getPinboardByOwner(userId);
-		Posting po = this.createPosting(p.getId(), text);
+
+		Posting po = new Posting();
+		po.setPinboardId(p.getId());
+		po.setText(text);
+		po.setCreateDate(new Timestamp(System.currentTimeMillis()));
+
+		po.setId(1);
 		
-		return po;
+
+		return poMapper.insert(po);
 	}
 
 	/**
@@ -339,6 +346,7 @@ public class PinitServiceImpl extends RemoteServiceServlet implements PinitServi
 
 		s.setUserId(userId);
 		s.setPinboardId(p.getId());
+		s.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
 		s.setId(1);
 

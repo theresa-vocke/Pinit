@@ -17,10 +17,6 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.pinit.client.gui.SubscriptionForm.DeaboniereAsyncCallback;
-import de.hdm.pinit.client.gui.SubscriptionForm.LoadPinboardCallback;
-import de.hdm.pinit.client.gui.SubscriptionForm.PostingCallback;
-import de.hdm.pinit.client.gui.SubscriptionForm.RemoveClickHandler;
 import de.hdm.pinit.shared.PinitServiceAsync;
 import de.hdm.pinit.shared.bo.Pinboard;
 import de.hdm.pinit.shared.bo.Posting;
@@ -68,8 +64,8 @@ public class PinboardForm extends VerticalPanel {
 
 		pinitService.getUserById(userId, new UserAsyncCallback());
 		pinitService.getPinboardByOwner(userId, new PinboardCallBack());
-		// pinitService.getPostingByPinboard(ownerId, new
-		// postingbeitragCallback());
+		//pinitService.getPostingsByPinboardOwner(userId, new LoadAllCallback());
+		// //postingbeitragCallback());
 
 		content.add(user);
 		content.add(text);
@@ -80,9 +76,10 @@ public class PinboardForm extends VerticalPanel {
 		// für das Anzeigen von Beiträgen
 		this.currentUser = userId;
 		postingScroll.setSize("900px", "550px");
-		pinitService.getUserById(userId, new LoadPinboardCallback());
+		
+		//pinitService.getUserById(userId, new UserAsyncCallback());
 
-		removeBtn.addClickHandler(new RemoveClickHandler());
+		removeBtn.addClickHandler(new UserDieClickHandler());
 		removeBtn.setStylePrimaryName("remove-button");
 
 		postingScroll.add(postingTable);
@@ -95,9 +92,12 @@ public class PinboardForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(User result) {
-			// TODO Auto-generated method stub
-			user.setText("Schreibe einen neuen Beitrag für deine Freunde:");
 
+			user.setText("Schreibe einen neuen Beitrag auf deine Pinnwand:");
+			user.setStylePrimaryName("label-posting");
+
+			pinitService.getPostingsByPinboardOwner(result.getId(), new LoadAllCallback());
+			nickname = result.getNickname();
 		}
 
 		@Override
@@ -128,29 +128,33 @@ public class PinboardForm extends VerticalPanel {
 
 			String input = text.getValue();
 			pinitService.createPostingForPinboard(Integer.parseInt(Cookies.getCookie("id")), input,
-					new LoadPinboardCallback());
+					new NewPostingCallback());
 		}
+	}
+
+	// Speichern eines neuen Beitrags
+	public class NewPostingCallback implements AsyncCallback<Posting> {
+
+		@Override
+		public void onFailure(Throwable arg0) {
+			Window.alert("Der neue Beitrag wurde nicht gespeichert");
+
+		}
+
+		@Override
+		public void onSuccess(Posting arg0) {
+			Window.alert("Der neue Beitrag wurde tatsaechlich gespeichert");
+		
+			RootPanel.get("details").clear();
+			RootPanel.get("details").add(new PinboardForm(Integer.parseInt(Cookies.getCookie("id"))));
+			//new LoadAllCallback();
+		}
+
 	}
 
 	// alles für das Anzeigen von Beiträgen
 
-	public class LoadPinboardCallback implements AsyncCallback<User> {
-
-		@Override
-		public void onSuccess(User result) {
-			pinitService.getPostingsByPinboardOwner(result.getId(), new PostingCallback());
-			nickname = result.getNickname();
-		}
-
-		@Override
-		public void onFailure(Throwable caught) {
-
-			Window.alert("Fehler");
-		}
-
-	}
-
-	public class PostingCallback implements AsyncCallback<Vector<Posting>> {
+	public class LoadAllCallback implements AsyncCallback<Vector<Posting>> {
 
 		@Override
 		public void onFailure(Throwable arg0) {
@@ -193,7 +197,7 @@ public class PinboardForm extends VerticalPanel {
 
 	}
 
-	public class RemoveClickHandler implements ClickHandler {
+	public class UserDieClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
