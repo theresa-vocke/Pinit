@@ -43,7 +43,20 @@ body {
 	margin-right: 4%;
 }
 
+.label-posting{
+	font-family: monospace;
+	font-size: 22px;
+}
 
+.pinit-bt{
+	font-family: Arial;
+ color: #ffffff;
+ background-color: #c40000;
+ border: none;
+ font-size: 15px;
+ height: 40px;
+ width: 15%;
+}
 
 .login-button {
  font-family: Arial;

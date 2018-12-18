@@ -32,6 +32,7 @@ public class PinboardForm extends VerticalPanel {
 	final FlexTable flexx = new FlexTable();
 
 	Button beitragBtn = new Button("Pin It!");
+
 	Label user = new Label();
 	TextArea text = new TextArea();
 
@@ -67,12 +68,14 @@ public class PinboardForm extends VerticalPanel {
 		//pinitService.getPostingsByPinboardOwner(userId, new LoadAllCallback());
 		// //postingbeitragCallback());
 
+		beitragBtn.setStylePrimaryName("pinit-btn");
+		
 		content.add(user);
 		content.add(text);
 		content.add(beitragBtn);
 		content.add(flexx);
 		this.add(content);
-
+		
 		// für das Anzeigen von Beiträgen
 		this.currentUser = userId;
 		postingScroll.setSize("900px", "550px");
